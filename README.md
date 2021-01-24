@@ -20,7 +20,7 @@ If you'd like to replace the content of the default database that comes with the
 3. create tables according to the following schemas:
 
 ```sql
-CREATE TABLE IF NOT EXISTS "items"(iid integer primary key, stem text not null, ans1 text, ans2 text, ans3 text, ans4 text);
+CREATE TABLE items(iid integer primary key, stem text not null, ans1 text, ans2 text, ans3 text, ans4 text);
 CREATE TABLE keys(iid integer not null, key string not null, foreign key (iid) references items (iid));
 CREATE TABLE stats(iid integer not null, attempts integer not null, rights integer not null, streak integer not null, mastered boolean not null, foreign key (iid) references items (iid));
 CREATE TABLE domains(did integer primary key, title text not null);
