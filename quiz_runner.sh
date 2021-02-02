@@ -11,15 +11,14 @@ MASTERED_THRESHOLD=5
 
 show_random_item() {
 
-	size=$(sqlite3 quiz.db "select iid from stats where mastered=0")
-	if [ "$size" == "0" ]; then
+	size=$(sqlite3 quiz.db "select count(*) from stats where mastered=0")
+	if [[ "$size" == "0" ]]; then
 		echo "no items to show. exiting."
 		exit
 	fi
 	
 	# show only items that are not mastered yet
 	iid=$(sqlite3 quiz.db "select iid from stats where mastered=0 order by random() limit 1")
-	
 	stem=$(sqlite3 quiz.db "select stem from items where iid=${iid}")
 	ans1=$(sqlite3 quiz.db "select ans1 from items where iid=${iid}")
 	ans2=$(sqlite3 quiz.db "select ans2 from items where iid=${iid}")
