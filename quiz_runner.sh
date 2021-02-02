@@ -37,8 +37,6 @@ print_item() {
 check_correctness() {
 	key=$(sqlite3 quiz.db "select key from keys where iid=$1")
 
-	# echo "key is $key"
-	# echo "response is $2"
 	if [[ "$key" == "$2" ]]; then
 		echo -e "your response $2 is ${GREEN}correct!"
 	else
@@ -54,7 +52,6 @@ update_stats() {
 	streak=$(sqlite3 quiz.db "select streak from stats where iid=$1")
 	mastered=0;
 
-
 	key=$(sqlite3 quiz.db "select key from keys where iid=$1")
 	if [[ "$key" == "$2" ]]; then
 		((rights++))
@@ -68,9 +65,6 @@ update_stats() {
 		streak=$zero
 		mastered=$zero
 	fi
-
-
-	
 	
 	sqlite3 quiz.db "update stats set attempts=${attempts}, rights=${rights}, streak=${streak}, mastered=$mastered where iid=$1"
 	echo "stats: attempts: ${attempts}, rights: ${rights}, streak=${streak}, mastered=${mastered}"	
@@ -94,7 +88,6 @@ echo $SEPARATOR
 # zsh equivalent to 'read -p' in bash
 vared -p "answer: " -c response
 check_correctness $iid $response
-#is_mastered $iid
 
 update_stats $iid $response
 
