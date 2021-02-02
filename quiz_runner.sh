@@ -85,9 +85,24 @@ echo "\n"
 print_item $stem $ans1 $ans2 $ans3 $ans4
 echo $SEPARATOR
 
-# zsh equivalent to 'read -p' in bash
-vared -p "answer: " -c response
-check_correctness $iid $response
+
+check_response() {
+	# zsh equivalent to 'read -p' in bash
+	vared -p "answer (a/b/c/d): " -c response
+	case $response in
+		a|b|c|d) 
+			check_correctness $iid $response
+			;;
+			
+		*) 
+			echo "invalid response. try again."
+			check_response;
+			;;
+	esac
+}
+
+
+check_response
 
 update_stats $iid $response
 
