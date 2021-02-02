@@ -1,6 +1,18 @@
+#About
+
+A simple bash script that displays random questions in terminal.
+
+Upon invocation, the script queries a custom `sqlite` database for a random question, displays it and gives the user feedback.
+The user can choose to continue, and get another question, or to exit the program.
+
+After every response, some basic statistics are displayed and saved to the database.
+
+When a certain question is answered correctly a consecutive number of times (defined in `quiz_runner.sh` as `MASTERED_THRESHOLD`), it is considered mastered and won't be selected again for display.
+
+
 # Prerequisits:
 
-* a terminal with `zsh` interpreter
+* a terminal with `zsh` shell
 * `sqlite3`
 
 
@@ -28,4 +40,38 @@ CREATE TABLE items_domains(iid integer not null, did integer not null, foreign k
 ```
 
 4. activate foreign key constraints: `PRAGMA foreign_keys=ON;`
-5. populate the tables with your own content
+5. populate the tables with your own content (recommended with `sqlitebrowser`)
+
+
+## Column names description:
+
+###items
+* `iid` - item id
+* `stem` - the question body, without the answer options
+* `ans1` - answer option 1
+* `ans2` - answer option 2
+* `ans3` - answer option 3
+* `ans4` - answer option 4
+
+###keys
+* `iid` - item id
+* `key` - correct answer index (a|b|c|d)
+
+###stats
+* `iid` - item id
+* `attemts` - total number of answer attempts
+* `rights` - total number of correct answers
+* `streak` - number of consecutive correct answers. incremented by 1 upon correct answer; set to 0 upon wrong answer.
+* `mastered` - if `sterek` reaches predefined threshold, the question is considered mastered, and won't show again.
+
+###domains
+* `did` - domain id
+* `title` - domain name
+
+###items_domains
+* `iid` - item id
+* `did` - domain id
+
+
+
+

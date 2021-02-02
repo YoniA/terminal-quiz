@@ -10,8 +10,6 @@ MASTERED_THRESHOLD=5
 
 
 show_random_item() {
-	# num_records=$(sqlite3 quiz.db "select count(*) from items");
-	# iid=$(shuf -i 1-$num_records -n 1)
 
 	# show only items that are not mastered yet
 	iid=$(sqlite3 quiz.db "select iid from stats where mastered=0 order by random() limit 1")
@@ -24,7 +22,6 @@ show_random_item() {
 
 	echo "\n"
 	print_title $iid
-	echo "\n"
 	
 	print_item $stem $ans1 $ans2 $ans3 $ans4
 	echo $SEPARATOR
@@ -52,6 +49,7 @@ print_title() {
 	title="Topic: $topic"
 	echo "$title"
 	printf "%0.s-" {1..${#title}} 	
+	echo "\n"
 }
 
 print_item() {
@@ -63,7 +61,7 @@ print_item() {
 	echo "d.\t$5"	
 }
 
-check_correctness() {
+print_feedback() {
 	key=$(sqlite3 quiz.db "select key from keys where iid=$1")
 
 	if [[ "$key" == "$2" ]]; then
@@ -113,7 +111,7 @@ check_response() {
 	vared -p "answer (a/b/c/d): " -c response
 	case $response in
 		a|b|c|d) 
-			check_correctness $iid $response
+			print_feedback $iid $response
 			;;
 			
 		*) 
