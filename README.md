@@ -1,4 +1,4 @@
-#About
+# About
 
 A simple bash script that displays random questions in terminal.
 
@@ -45,7 +45,7 @@ CREATE TABLE items_domains(iid integer not null, did integer not null, foreign k
 
 ## Column names description:
 
-###items
+### items
 * `iid` - item id
 * `stem` - the question body, without the answer options
 * `ans1` - answer option 1
@@ -53,22 +53,22 @@ CREATE TABLE items_domains(iid integer not null, did integer not null, foreign k
 * `ans3` - answer option 3
 * `ans4` - answer option 4
 
-###keys
+### keys
 * `iid` - item id
 * `key` - correct answer index (a|b|c|d)
 
-###stats
+### stats
 * `iid` - item id
 * `attemts` - total number of answer attempts
 * `rights` - total number of correct answers
-* `streak` - number of consecutive correct answers. incremented by 1 upon correct answer; set to 0 upon wrong answer.
+* `streak` - number of consecutive correct answers. incremented by 1 upon correct answer; set to 0 otherwise.
 * `mastered` - if `sterek` reaches predefined threshold, the question is considered mastered, and won't show again.
 
-###domains
+### domains
 * `did` - domain id
 * `title` - domain name
 
-###items_domains
+### items_domains
 * `iid` - item id
 * `did` - domain id
 
