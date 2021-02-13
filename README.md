@@ -12,7 +12,7 @@ When a certain question is answered correctly a consecutive number of times (def
 
 ![demo gif](demo.gif)
 
-# Prerequisits:
+# Prerequisites:
 
 * a terminal with `zsh` shell
 * `sqlite3`
@@ -31,6 +31,7 @@ this should display a quiz on the terminal.
 
 The default database contains questions about Web development topics - HTML, CSS, JavaScript, Rails, Angular, Linux etc. But it can also be used for foreign language learning, or anything 
 you want to memorize.
+
 If you'd like to replace the content of the default database that comes with the clone, you can do the following:
 1. remove the default database: `rm -rf ./quiz.db`
 2. in `mysqlite3` create an empty database named `quiz.db` (name is important!).
