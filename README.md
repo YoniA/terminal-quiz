@@ -7,7 +7,7 @@ The user can choose to continue, and get another question, or to exit the progra
 
 After every response, some basic statistics are displayed and saved to the database.
 
-When a certain question is answered correctly a consecutive number of times (defined in `quiz_runner.sh` as `MASTERED_THRESHOLD`), it is considered mastered and won't be selected again for display.
+When a certain question is answered correctly a consecutive number of times, it is considered mastered and won't be selected again for display.
 
 
 ![demo gif](demo.gif)
@@ -32,7 +32,7 @@ this should display a quiz on the terminal.
 The default database contains questions about Web development topics - HTML, CSS, JavaScript, Rails, Angular, Linux etc. But it can also be used for foreign language learning, or anything 
 you want to memorize.
 
-If you'd like to replace the content of the default database that comes with the clone, you can do the following:
+If you'd like to replace the content of the default database that comes with the clone, either empty all the tables in the database, or do the following:
 1. remove the default database: `rm -rf ./quiz.db`
 2. in `mysqlite3` create an empty database named `quiz.db` (name is important!).
 3. create tables according to the following schemas:
@@ -68,7 +68,7 @@ CREATE TABLE items_domains(iid integer not null, did integer not null, foreign k
 * `attemts` - total number of answer attempts
 * `rights` - total number of correct answers
 * `streak` - number of consecutive correct answers. incremented by 1 upon correct answer; set to 0 otherwise.
-* `mastered` - if `streak` reaches predefined threshold, the question is considered mastered, and won't show again.
+* `mastered` - if `streak` reaches predefined threshold (defined as `MASTERED_THRESHOLD` in `quiz_runner.sh`, the question is considered mastered, and won't show again.
 
 ### domains
 * `did` - domain id
@@ -82,5 +82,6 @@ CREATE TABLE items_domains(iid integer not null, did integer not null, foreign k
 
 ## Features that I may add in the future:
 * Shuffle answers - anytime a question appears, its answer options are displayed in a random order
+* Show questions by topic
 * Ageing algorithm - display questions of least success level. i.e, you will see the questions you struggle with the most again and again. As the streak of a question is incremented, the
 proirity of that question is lowered, in favor of harder questions (with lower streak level). This technique makes learning more efficient.
