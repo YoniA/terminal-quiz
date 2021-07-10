@@ -1,6 +1,8 @@
 # About
 
 A simple bash script that displays random questions in terminal.
+The default database contains questions about Web development topics - HTML, CSS, JavaScript, Rails, Angular, Linux etc. But it can also be used for foreign language learning, or anything 
+you want to memorize.
 
 Upon invocation, the script queries a custom `sqlite` database for a random question, displays it and gives the user feedback.
 The user can choose to continue, and get another question, or to exit the program.
@@ -27,16 +29,9 @@ When a certain question is answered correctly a consecutive number of times, it 
 
 this should display a quiz on the terminal.
 
-## Creating custom database content
 
-The default database contains questions about Web development topics - HTML, CSS, JavaScript, Rails, Angular, Linux etc. But it can also be used for foreign language learning, or anything 
-you want to memorize.
-
-If you'd like to replace the content of the default database that comes with the clone, either empty all the tables in the database, or do the following:
-1. remove the default database: `rm -rf ./quiz.db`
-2. in `mysqlite3` create an empty database named `quiz.db` (name is important!).
-3. create tables according to the following schemas:
-
+## DB table description:
+The default DB is created according to the following schemas:
 ```sql
 CREATE TABLE items(iid integer primary key, stem text not null, ans1 text, ans2 text, ans3 text, ans4 text);
 CREATE TABLE keys(iid integer not null, key string not null, foreign key (iid) references items (iid));
@@ -45,11 +40,7 @@ CREATE TABLE domains(did integer primary key, title text not null);
 CREATE TABLE items_domains(iid integer not null, did integer not null, foreign key (iid) references items (iid), foreign key (did) references domains (did));
 ```
 
-4. activate foreign key constraints: `PRAGMA foreign_keys=ON;`
-5. populate the tables with your own content (recommended with `sqlitebrowser`)
-
-
-## Column names description:
+These tables are outlined bellow:
 
 ### items
 * `iid` - item id
@@ -78,6 +69,27 @@ CREATE TABLE items_domains(iid integer not null, did integer not null, foreign k
 * `iid` - item id
 * `did` - domain id
 
+
+## utils directory
+
+The utils directory contains utility scripts such as reset all statistics, show the number of questions from each topic, wipe off all db content, etc.
+To execute a script form utils:
+ 
+1. add execute permissions: `sudo chmod +x utils/util_name.sh` (where `util_name` is the actual name of the util, as detailed bellow). 
+2. run `utils/util_name.sh`
+
+### util scripts
+
+* `db_overview.sh` - print question distrubution by topic in the database
+* `reset_stats.sh` - reset all statistics (number of trials, streaks, mastered etc.) 
+* `empty_all_tables.sh` - wipe off all database content, leaving only empty tables. USE WITH CAUTION!. THIS OPERATION CANNOT BE UNDONE.
+
+
+## Creating custom database content
+
+If you'd like to replace the content of the default database that comes with the clone, wipe-off all database content, using the `empty_all_tables.sh` from the utils directory, and then popultate the tables with your own content, using the schemas as detailed above.
+
+* note: run the utils script from the main directory, like so: `utils/empty_all_tables.sh`.
 
 
 ## Features that I may add in the future:
