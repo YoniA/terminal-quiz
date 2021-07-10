@@ -14,13 +14,13 @@ When a certain question is answered correctly a consecutive number of times, it 
 
 ![demo gif](demo.gif)
 
-# Prerequisites:
+# Prerequisites
 
 * a terminal with `zsh` shell
 * `sqlite3`
 
 
-# Getting started:
+# Getting started
 
 1. clone this repo to your machine
 2. `cd` into the cloned directory
@@ -30,7 +30,7 @@ When a certain question is answered correctly a consecutive number of times, it 
 this should display a quiz on the terminal.
 
 
-# DB table description:
+# DB table description
 The default DB is created according to the following schemas:
 ```sql
 CREATE TABLE items(iid integer primary key, stem text not null, ans1 text, ans2 text, ans3 text, ans4 text);
@@ -70,7 +70,7 @@ These tables are outlined bellow:
 * `did` - domain id
 
 
-# utils directory
+# The utils directory
 
 The utils directory contains utility scripts such as reset all statistics, show the number of questions from each topic, wipe off all db content, etc.
 To execute a script form utils:
@@ -92,7 +92,7 @@ If you'd like to replace the content of the default database that comes with the
 * note: run the utils script from the main directory, like so: `utils/empty_all_tables.sh`.
 
 
-# Features that I may add in the future:
+# Features that I may add in the future
 * Shuffle answers - anytime a question appears, its answer options are displayed in a random order
 * Show questions by topic
 * Ageing algorithm - display questions of least success level. i.e, you will see the questions you struggle with the most again and again. As the streak of a question is incremented, the
