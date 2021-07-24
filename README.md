@@ -83,7 +83,7 @@ To execute a script form utils:
 * `db_overview.sh` - print question distrubution by topic in the database
 * `reset_stats.sh` - reset all statistics (number of trials, streaks, mastered etc.) 
 * `empty_all_tables.sh` - wipe off all database content, leaving only empty tables. USE WITH CAUTION!. THIS OPERATION CANNOT BE UNDONE.
-* `dump_to_txt.sh` - write all records of `item` table to a txt file named `dump.txt`
+* `dump_to_txt.sh` - write all records of `item` table to a txt file named `dump_timestamp.txt` (where `timestamp` is the actual datetime at the moment of creation).
 
 # Creating custom database content
 

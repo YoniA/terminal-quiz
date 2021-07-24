@@ -1,0 +1,605 @@
+  iid = 1
+ stem = What will the following code print:
+
+let a = [1, 2, 3];
+console.log(typeof a);
+
+ ans1 = "array"
+ ans2 = "object"
+ ans3 = undefined
+ ans4 = "function"
+
+  iid = 2
+ stem = What is a resource in Rails?
+ ans1 = Any model we can can perform CRUD operations on, via RESTful requests
+ ans2 = Any file sitting in the 'app/assets' directory
+
+ ans3 = Anything that we can get from the internet using 'curl' and 'wget'
+ ans4 = Any table record in the database
+
+  iid = 3
+ stem = In the CSS box model, what is the width/height of an element?
+ ans1 = width/height of content+padding
+ ans2 = width/height of content
+ ans3 = width/height of content+border
+ ans4 = width/height of content+padding+border
+
+  iid = 4
+ stem = What is true in JavaScript:
+ ans1 = both objects and primitive types are copied by value
+ ans2 = both objects and primitive types are copied by value
+ ans3 = primitive types are copied by value, objects are copied by reference
+ ans4 = objects are copied by vaule, primitive types are copied by reference
+
+  iid = 5
+ stem = what will the following code print:
+
+
+const a = {name: "john", age: 27};
+const b = a;
+
+console.log(b === a);
+
+const c = {...a};
+console.log(c === a);
+ ans1 = first log: true, second log: false
+ ans2 = first log: false, second log: true
+ ans3 = first log: false, second log: false
+ ans4 = first log: true, second log: true
+
+  iid = 6
+ stem = Which command turns 'myfile' to an executable, by adding execute rights to its permissions:
+ ans1 = chmod +x myfile
+ ans2 = chmod 770 myfile
+ ans3 = chmod 777 myfile
+ ans4 = chmod -f myfile
+
+  iid = 7
+ stem = In a `flex` element, what does `justify-content` do:
+
+ ans1 = specifies the alignment along the main axis of the flex element
+ ans2 = specifies the alignment along the cross axis of the flex element
+ ans3 = specifies the alignment along both main axis and cross axis of the flex element
+ ans4 = always aligns horizontally, regardless of the flex axis
+
+  iid = 8
+ stem = What is rxjs?
+ ans1 = A JavaScript library for DOM manipulation
+ ans2 = A JavaScript library for handling and manipulating streams of asynchronous events
+ ans3 = A replacement of AJAX for asynchronous API calls
+ ans4 = rxjs is the modern ES6 replacement of jQuery
+
+  iid = 9
+ stem = What does the 'async' pipe do?
+ ans1 = It is used to subscribe to an observable in the template
+ ans2 = It is a general-purpose pipe used to formatting, according to custom implementation 
+ ans3 = It stops template rendering until a change is detected
+ ans4 = It tells angular to use 'onPush' change detection policy
+
+  iid = 10
+ stem = What is the default gateway (IP address) of a router?
+ ans1 = 127.0.0.1
+ ans2 = 132.0.0.1
+ ans3 = 10.0.60.28
+ ans4 = 10.0.0.138
+
+  iid = 11
+ stem = WEB API: what is the correct heirarchy of interfaces?
+
+notation: B<A means that B inherits from A.
+ ans1 = Node < HTMLElement < Element < EventTarget < Object
+ ans2 = Node < EventTarget < HTMLElement < Element < Object
+ ans3 = HTMLElement < Element < Node < EventTarget < Object
+ ans4 = EventTarget < Node < HTMLElement < Element < Object
+
+  iid = 12
+ stem = What does the 'async' attribute do?
+
+ <script async src="script.js"></script>
+ ans1 = It tells the browser to keep rendering the page and loading the script. when script is ready, rendering stops and the script fires
+ ans2 = It tells the browser to render the whole page, and only then fire the script
+ ans3 = It tells the browser to wait until the script is ready and only then start rendering the page
+ ans4 = It tells the browser to fire the script upon the first async event from the user - mouse click, keydown, etc.
+
+  iid = 13
+ stem = What does the 'defer' attribute do?
+
+ <script defer src="script.js"></script>
+ ans1 = It tells the browser to keep rendering the page and loading the script. when script is ready, rendering stops and the script fires
+ ans2 = It tells the browser to render the whole page, and only then fire the script
+ ans3 = It tells the browser to wait until the script is ready and only then start rendering the page
+ ans4 = It tells the browser to fire the script upon the first async event from the user - mouse click, keydown, etc.
+
+  iid = 14
+ stem = What is true about Windows running on a 64-bit machine:
+ ans1 = There will be one 'Program Files' directory for all program types
+ ans2 = Programs will be in two folders: 'Program Files' -  for 64-bit programs, 'Program Files (x86)' - for 32-bit programs
+ ans3 = There will be one 'Program Files (x86)' directory for all program types
+ ans4 = Programs will be in two folders: 'Program Files' - for programs installed by the user, 'Program Files (x86)' -for system programs that come preinstalled with Windows
+
+  iid = 15
+ stem = What is a modem?
+ ans1 = a device for allocating dynamic IP addersses
+ ans2 = a splitter for telephone signals and non-telephone signals
+ ans3 = a routing device for link layer components
+ ans4 = a device that converts analog signals to digital signals, and vice versa.
+
+  iid = 16
+ stem = What is the 5-layer Internet protocol stack?
+
+note: A < B means that B is above A in the stack.
+ ans1 = Physical Layer < Link Layer < Transport Layer < Network Layer < Application Layer
+ ans2 = Physical Layer < Link Layer < Network Layer < Transport Layer < Application Layer
+ ans3 = Physical Layer < Link Layer < Transport Layer < Application Layer < Network Layer 
+ ans4 = Physical Layer < Transport Layer < Link Layer < Network Layer < Application Layer
+
+  iid = 17
+ stem = OSI model: 
+
+To which layer does the HTTP, FTP, SMTP protocols belong?
+ ans1 = Transport Layer
+ ans2 = Network Layer
+ ans3 = Application Layer
+ ans4 = Link Layer
+
+  iid = 18
+ stem = OSI model: 
+
+To which layer does the TCP, UDP protocols belong?
+ ans1 = Application Layer
+ ans2 = Transport Layer
+ ans3 = Link Layer
+ ans4 = Network Layer
+
+  iid = 19
+ stem = OSI model: 
+
+To which layer does the IP protocol belong?
+ ans1 = Application Layer
+ ans2 = Transport Layer
+ ans3 = Link Layer
+ ans4 = Network Layer
+
+  iid = 20
+ stem = What is true about Linux filesystem vs Windows filesystem?
+ ans1 = Linux has a Unified file system (single tree), while WIndows has a separate tree for each partition (Drive)
+ ans2 = both Linux and Windows have a unified file system (single tree)
+ ans3 = In Linux, plugging in a flash drive results in a new separate tree
+ ans4 = In Windows, plugging in a flash drive mounts it to the unified tree
+
+  iid = 21
+ stem = Which files the following command catch, using the "*" wildcard?
+
+rm *.*htm*
+ ans1 = 404.html, 403.shtml, services.php
+
+ ans2 = 500.shtm, 404html, google4c38b1t.html
+ ans3 = ok.htm, 123.html, 12.34.google.htm.l
+ ans4 = ok.htm, style.css, vm_edit.html
+
+  iid = 22
+ stem = What will the following command do, using curly brackets and "*" wildcards:
+
+rm {*.pdf, *.txt}
+ ans1 = remove all txt and pdf files recursively in all folders inside current directory
+ ans2 = remove all pdf and txt files in current directory only
+ ans3 = remove either all pdf files or all txt files in current direcrtory, according to what it finds first
+ ans4 = remove a single pdf file and a single txt files from current directory
+
+  iid = 23
+ stem = What is an interactive process?
+ ans1 = a process that interacts with a remote server
+ ans2 = a process we interact with via the terminal
+ ans3 = a process that interact with the kernel using system calls
+ ans4 = a process that runs in the background
+
+  iid = 24
+ stem = What is an automatic process?
+ ans1 = an invocation of a bash script or cron job
+ ans2 = a process that is invoked automatically by the kernel
+ ans3 = a process that runs in the background
+ ans4 = a process that cannot be killed by a signal
+
+  iid = 25
+ stem = What is a deamon process?
+ ans1 = a process that interacts with the user via terninal
+ ans2 = a process that does frequent I/O requests
+ ans3 = a process that runs continously in the background
+ ans4 = a process that kills other procecess by giving it a list of pids
+
+  iid = 26
+ stem = What is HTTPS?
+ ans1 = it is a Network-layer protocol
+ ans2 = it is a secure HTTP protocol (HTTP over TLS/SSL)
+ ans3 = it is the protocol that was replaced by the modern HTTP protocol
+ ans4 = it opens a secure communication channel over a secure network
+
+  iid = 27
+ stem = What is the difference between sessions and cookies
+ ans1 = Session always expires when the browser is closed, cookies persist in the browser
+ ans2 = Cookies expire upon closing the browser, sessions persist
+ ans3 = there is no difference between sessions and cookies, Rails uses the terms interchangeably
+ ans4 = Sessions are stored in local storage, cookies are stored in the disk
+
+  iid = 28
+ stem = What is the difference between WEBrick and Puma webs ervers?
+ ans1 = WEBrick is a single-threaded small development server, Puma is suitable for production capable of serving large amount of incoming requests
+ ans2 = both servers are suitable for production, WEBrick is the predecessor of Puma
+ ans3 = Puma is a single-threaded server, thus incapable of serving multiple requests in parallel
+ ans4 = Puma is the default application server
+
+  iid = 29
+ stem = In which file we declare a resource to create a full suite of RESTful routes?
+ ans1 = config/application.rb
+ ans2 = config/database.yml
+ ans3 = in the appropriate controller
+ ans4 = config/routes.rb
+
+  iid = 30
+ stem = What is a cron job?
+ ans1 = a kernel level scheduler for allocting CPU to processes
+ ans2 = a process that is scheduled to run peroidically (fixed times/dates/intervals)
+ ans3 = a deamon process that monitors time and date in the system
+ ans4 = a printer process to collect jobs from the user to the print queue
+
+  iid = 31
+ stem = How to pause a process running in the foreground?
+ ans1 = ctrl + z
+ ans2 = ctrl + c
+ ans3 = run the command 'bg'
+ ans4 = alt + f4
+
+  iid = 32
+ stem = What does the 'nice' command do?
+ ans1 = prints the user details logged in to the machine in a nice format (human readable)
+ ans2 = changes the priority of a process (less or more aggressive)
+ ans3 = no such command
+ ans4 = lists all the processes that consume least system resources (efficient processes)
+
+  iid = 33
+ stem = In a terminal with a foreground process, what does pressing 'ctrl'+'z' do?
+ ans1 = makes the kernel send SIGQUIT signal to the process
+ ans2 = makes the kernel send SIGABRT signal to the process
+ ans3 = makes the kernel send SIGINT signal to the process
+ ans4 = makes the kernel send SIGSTP signal to the process
+
+  iid = 34
+ stem = What does the following command do?
+
+cat foo.txt || echo "no such file"
+ ans1 = prints "no such file" to foo.txt
+ ans2 = tries to print foo.txt and if it fails, it prints "no such file" to the console
+ ans3 = prints the content of foo.txt and "no such file" to the console
+ ans4 = do one of the things randomly: either print the content of foo.txt or print "no such file" to the console
+
+  iid = 35
+ stem = What does the following command do?
+
+cat foo.txt && echo "file printed sucessfully"
+ ans1 = prints "file printed sucessfully" to foo.txt
+ ans2 = tries to print foo.txt and only it it succeeds, prints "file printed sucessfully" to the console
+ ans3 = do both commands one after the other anyway
+ ans4 = do one of the things randomly: either print the content of foo.txt or print "file printed sucessfully" to the console
+
+  iid = 36
+ stem = I/O streams
+
+What are the names of I/O streams, their file descriptors and default device?
+ ans1 = stdin, fd: 0, keyboard; stdout, fd: 1, file; stderror, fd: 2, screen
+ ans2 = stdin, fd: 2, keyboard; stdout, fd: 1, file; stderror, fd: 0, screen
+ ans3 = stdin, fd: 0, keyboard; stdout, fd: 1, screen; stderror, fd: 2, file
+ ans4 = stdin, fd: 0, keyboard; stdout, fd: 1, screen; stderror, fd: 2, screen
+
+  iid = 37
+ stem = I/O redirection
+
+What is the difference between the following commands:
+
+echo "hello world" > foo.txt
+echo "hello world" >> foo.txt
+ ans1 = fisrt command appends to the file, second command overrides the file and writes from the beginning
+ ans2 = fisrt command overrides the file and writes from the beginning, second command appends to the file 
+ ans3 = both commands produce the same result
+ ans4 = first command appends to the file, second command redirects to stdout (screen)
+
+  iid = 38
+ stem = I/O redirection
+
+What does the following command do?
+
+make 2>> log
+ ans1 = output goes to screen; erorr messages go to file; append
+ ans2 = output goes to screen; erorr messages go to file; override
+ ans3 = both output and error go to screen (which is the default for stdout, stderr)
+ ans4 = both output and error go to the log file
+
+  iid = 39
+ stem = I/O redirection
+
+What does the following command do?
+
+make &>> log
+ ans1 = both output and error go to screen; print log to screen
+ ans2 = redirect both output and error to log file; override
+ ans3 = if make succeeded print to screen; else redirect error to log file
+ ans4 = reidrect both output and error to log file; append
+
+  iid = 40
+ stem = I/O redirection
+
+What does the following command do?
+
+sort < log > sorted
+ ans1 = copy log to sorted and then apply sort on the result
+ ans2 = cat sort and log to a single file called sorted
+ ans3 = apply sort on log and write the result to sorted
+ ans4 = sort input from stdin and then redirect errors to log and result to sorted
+
+  iid = 41
+ stem = I/O redirection
+
+What does the following command do?
+
+bundle exec rails s &> /dev/null
+ ans1 = it invokes rails server and redirects stdout and stderr to the device /dev/null
+ ans2 = it invokes rails server and reads requests form /dev/null
+ ans3 = it invokes rails server and redirects only errors to /dev/null
+ ans4 = it reads input from /dev/null and upon the first truthy value it invokes rails server
+
+  iid = 42
+ stem = What is the sad1 device file?
+ ans1 = first partition of the first IDE hard disk
+ ans2 = SCSI Hard disk with SCSI ID 1
+ ans3 = SCSI CD-ROM with SCSI ID 1
+ ans4 = first partition of the first SCSI hard disk
+
+  iid = 43
+ stem = What is a device file?
+ ans1 = a driver for storage devices such as flash media, hard disks etc.
+ ans2 = one of the files for the I/O streams mounted under /dev
+ ans3 = a special file that is an interface to a device driver
+ ans4 = a driver to a physical device such as keyboad, mouse, printer etc.
+
+  iid = 44
+ stem = What is true about using a pipe as follows:
+
+cat log1 log2 | grep -i "error"
+ ans1 = the first command will concatenate the files and print it to the screen, from which the second command will read
+ ans2 = both commands will run on a single process, the shell process
+ ans3 = every command runs in a subshell (child process)
+ ans4 = the pipe operator will chain each log file to the grep input
+
+  iid = 45
+ stem = I/O redirection
+
+What will the following command do?
+
+
+make |tee make.out | grep -i "error"
+ ans1 = the result of running make will be printed to stdout as well as to make.out; make.out will be the input to "grep"
+ ans2 = the result of running make will be printed to stdout as well as to make.out; make.out will be the input to "grep"
+ ans3 = the result of running make will be printed to stdout as well as to make.out; make.out will be the input to "grep"
+ ans4 = the result of running make will be printed to stdout as well as to make.out; make.out will be the input to "grep"
+
+  iid = 46
+ stem = What does the following query do?
+
+SELECT CITY
+FROM STATION
+WHERE CITY REGEXP '[^aeiouAEIOU]$'
+
+ ans1 = select all cities whose names begin with a vowel
+ ans2 = select all cities whose names do not end with a vowel
+ ans3 = select all cities whose names do not contain a vowel
+ ans4 = select all cities whose names end with a vowel
+
+  iid = 47
+ stem = What is the purpose of the 'await' operator?
+
+ ans1 = it is used anywhere in the code to wait for a promise to settle
+ ans2 = it is used to wait for setTimeout to fire its callback
+ ans3 = it is used to block program execution until the user closes an alert dialog
+ ans4 = it is used inside an async function to pause execution until a promise is settled (fulfilled or rejected)
+
+  iid = 48
+ stem = What is a Promise?
+
+ ans1 = a commitment to implement all methods of an API (interface contract)
+ ans2 = an object that represent an eventual completion of an async operation and its value
+ ans3 = an async function that uses the 'await' keyword
+ ans4 = a callback inside an asynchronous operation, such as setTimeout, onClick etc.
+
+  iid = 49
+ stem = What are xterm, qterminal?
+
+ ans1 = terminal emulators that run as X-clients as part of the X-Window system 
+ ans2 = tty devices that communicate with the mouse, keyboard and monitor drivers
+ ans3 = terminal-based editors (along with vi, vim, nano etc.)
+
+ ans4 = client GUI software to control processes and system resources
+
+  iid = 50
+ stem = What is a Shell?
+
+ ans1 = a physical workstation containing a monitor and keyboard through which the user can communicate with the computer
+ ans2 = a terminal emulator that run as X-client, as part of the X-Window system (X11)
+ ans3 = a user space program that exposes kernel services to user/program; accessed through terminal/terminal emulator program/application
+ ans4 = a kernel program to communicate with hardware drivers such as keyboard mouse, etc.
+
+  iid = 51
+ stem = What is the type of shell you get when you open an emulated terminal (X terminal)?
+
+ ans1 = non-interactive login shell
+ ans2 = interactive non-login shell
+ ans3 = interactive login shell
+ ans4 = non-interactive non-login shell
+
+  iid = 52
+ stem = What is the type of shell you get when you SSH into a server?
+
+ ans1 = interactive non-login shell
+ ans2 = non-interactive login shell
+ ans3 = interactive login shell
+ ans4 = non-interactive non-login shell
+
+  iid = 53
+ stem = What is Bundler?
+ ans1 = a Gem for posting and receiving data from a server.
+ ans2 = a Gem for communicating with Webpack server; and bundling all the app components together.
+ ans3 = a multi-threaded, load-balancing Rails server, designed for heavy traffc.
+ ans4 = a dependency manager, based on the Gemfie; bundler is a gem itself.
+
+  iid = 54
+ stem = When the Gemfile.lock is created?
+ ans1 = When creating a new project with `rails new` command
+ ans2 = When running `bundle install for the first time`
+ ans3 = when running a migration for the first time, using the command `rails db:migrate`
+ ans4 = it has to be added manually
+
+  iid = 55
+ stem = What is the purpose of Gemfile.lock?
+ ans1 = it contains global dependencies; unlike the local dependencies in the Gemfile
+ ans2 = it contains production dependencies only
+ ans3 = to specify the exact dependencies with which the app is guaranteed to work properly
+ ans4 = it is an alias for the Gemfile file
+
+  iid = 56
+ stem = What is migration?
+ ans1 = a snapshot of the database structure
+ ans2 = a snapshot of the database content
+ ans3 = the process of upgrading gems to newer versions
+ ans4 = the process of updating rails to newer version
+
+  iid = 57
+ stem = What is the purpose of the 'await' operator?
+
+ ans1 = it is used inside an async function to pause execution until a promise is settled (fulfilled or rejected)
+ ans2 = it is used anywhere in the code to wait for a promise to settle
+ ans3 = it is used to wait for setTimeout to fire its callback
+ ans4 = it is used to block program execution until the user closes an alert dialog
+
+
+  iid = 58
+ stem = What is a Promise?
+
+ ans1 = a commitment to implement all methods of an API (interface contract)
+ ans2 = an async function that uses the 'await' keyword
+
+ ans3 = a callback inside an asynchronous operation, such as setTimeout, onClick etc.
+
+ ans4 = an object that represent an eventual completion of an async operation and its value
+
+  iid = 59
+ stem = What are xterm, qterminal?
+ ans1 = tty devices that communicate with the mouse, keyboard and monitor drivers
+ ans2 = terminal emulators that run as X-clients as part of the X-Window system
+ ans3 = terminal-based editors (along with vi, vim, nano etc.)
+ ans4 = client GUI software to control processes and system resources
+
+  iid = 60
+ stem = What is a Shell?
+ ans1 = a terminal emulator that run as X-client, as part of the X-Window system (X11)
+ ans2 = a kernel program to communicate with hardware drivers such as keyboard mouse, etc.
+ ans3 = a physical workstation containing a monitor and keyboard through which the user can communicate with the computer
+ ans4 = a user space program that exposes kernel services to user/program; accessed through terminal/terminal emulator program/application
+
+  iid = 61
+ stem = What is the type of shell you get when you open an emulated terminal (X terminal)?
+
+ ans1 = interactive non-login shell
+ ans2 = non-interactive login shell
+ ans3 = interactive login shell
+ ans4 = non-interactive non-login shell
+
+
+  iid = 62
+ stem = What is the type of shell you get when you SSH into a server?
+
+ ans1 = interactive non-login shell 
+
+ ans2 = non-interactive login shell
+
+ ans3 = interactive login shell
+ ans4 = non-interactive non-login shell
+
+  iid = 63
+ stem = What is PATH?
+ ans1 = an environment variable that contains paths to commands and binaries
+ ans2 = an environment variable that holds the absolute path to super user's home directory
+ ans3 = a directory that holds all binaries and builtin commands
+ ans4 = a command line to search for the path of a binary
+
+  iid = 64
+ stem = What does the `which` command do?
+ ans1 = tells which hardware and os version is used
+ ans2 = tells which are the super users on the machine (sudoers)
+ ans3 = finds the path of a binary
+ ans4 = tells the version of a binary
+
+  iid = 65
+ stem = What is the difference between KB vs KiB?
+ ans1 = they are both the same: 10^3=1000 bytes
+ ans2 = KB is 1000 bytes; KiB is 1000 bits
+ ans3 = KB is 1000 bytes (10^3); KiB is 1024 bytes (2^10)
+ ans4 = KB is 1000 bits, KiB is 1000 bytes
+
+  iid = 66
+ stem = What are the steps of working with a new storage device?
+ ans1 = 1. mount the device\t2. partition the storage device;\t3. install filesystem on each partition
+ ans2 = 1. partition the storage device;\t2. install filesystem on each partition;\t3. mount the partition with the relevant filesystem
+ ans3 = 1. partition the storage device;\t2. mount the relevant partition;\t3. install filesystem on the mounted partition
+ ans4 = 1. mount the storage device;\t2. install filesystem on the whole device;\t3. partition the filesystem
+
+  iid = 67
+ stem = How to repace all occurances of `old` with `new` in a file?
+ ans1 = s/old/new/g
+ ans2 = s/old/new/gc
+ ans3 = s/old/new/G
+ ans4 = %s/old/new/g
+
+  iid = 68
+ stem = What will the following command do?
+
+sed 's/old/new/g' <old > new
+ ans1 = read the file 'old'; replace all occurances of 'old' with 'new' ; save the result to the file 'new'
+ ans2 = read the file new; replace all occurances of 'new' with 'old'; save the result and close the file
+ ans3 = read the file 'old'; replace the first 'old' in each line; save the result to 'new'
+ ans4 = read input from terminal; replace every typed 'old' with 'new'; save the result to the file 'new'
+
+  iid = 69
+ stem = What will the following command do?
+ ans1 = use regex to replace every numeric character with &&
+ ans2 = use regex to repeat every numeric character
+ ans3 = replace every && with random numeric character
+ ans4 = use regex to precede every numberic character with &
+
+  iid = 70
+ stem = What will the following command do?
+
+`echo $PATH | sed s/:/\\n/g`
+ ans1 = show every dir in PATH in a new line; modify PATH
+ ans2 = remove any redundant space line breack in PATH
+ ans3 = replace any spcae in PATH with colon
+ ans4 = show every dir in PATH in a new line; without modifying PATH
+
+  iid = 71
+ stem = What does the `file` command do?
+ ans1 = create a new file, named myfile, under current directory
+ ans2 = detertmine the file type of myfile
+ ans3 = check whether the given file is a regular file or a special file (dir, driver,...)
+ ans4 = show information about file (permissions, date modified etc.)
+
+  iid = 72
+ stem = What is the difference between `grep` and `egrep` commands?
+ ans1 = `grep` is used only to search in text; `egrep` is used to search and replace in text
+ ans2 = `grep` uses extended regular expression ERE;) `egrep` uses basic regular expressions (BRE)
+ ans3 = they do the same thing; but `egrep` is more optimized and run faster
+ ans4 = `grep` uses basic regular expression (BRE;) `egrep` uses extended regular expressions (ERE) *
+
+  iid = 73
+ stem = What are the syntax charactes of basic regular expression (BRE)?
+
+ ans1 = only ^  $  *  .  [  ]
+ ans2 = only ^ $  *  .  +  ?   [  ]
+ ans3 = only ^ $  *  .  +  ?   [  ]  {  }  |
+ ans4 = only ^  $  *  ?  .  +
