@@ -12,7 +12,7 @@ After every response, some basic statistics are displayed and saved to the datab
 When a certain question is answered correctly a consecutive number of times, it is considered mastered and won't be selected again for display.
 
 
-![demo gif](demo2.gif)
+![demo gif](demo.gif)
 
 # Prerequisites
 
