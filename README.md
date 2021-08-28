@@ -1,8 +1,8 @@
 # About
 
-A simple bash script that displays random questions in terminal.
-The default database contains questions about Web development topics - HTML, CSS, JavaScript, Rails, Angular, Linux etc. But it can also be used for foreign language learning, or anything 
-you want to memorize.
+A shell script that displays random questions in terminal.
+The default database contains questions about software development topics - Linux, Command line tools, bash, JavaScript, HTML, CSS, Rails, Angular etc.
+But it can also be used for foreign language learning, or anything you want to memorize.
 
 Upon invocation, the script queries a custom `sqlite` database for a random question, displays it and gives the user feedback.
 The user can choose to continue, and get another question, or to exit the program.
@@ -94,6 +94,9 @@ If you'd like to replace the content of the default database that comes with the
 
 # Features that I may add in the future
 * Shuffle answers - anytime a question appears, its answer options are displayed in a random order
-* Show questions by topic
+* Show questions by topic - menu for topic selection
 * Ageing algorithm - display questions of least success level. i.e, you will see the questions you struggle with the most again and again. As the streak of a question is incremented, the
 proirity of that question is lowered, in favor of harder questions (with lower streak level). This technique makes learning more efficient.
+* Automate db population with new questions from a file
+* Enable flags for invoking the script
+* Write a man page for the script
