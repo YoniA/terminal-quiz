@@ -60,10 +60,9 @@ print_title() {
 print_item() {
 	echo "$1"
 	echo $SEPARATOR
-	echo "a.\t$2"
-	echo "b.\t$3"
-	echo "c.\t$4"
-	echo "d.\t$5"	
+	
+	# shuffle answer options
+	shuf -e $ans1 $ans2 $ans3 $ans4 | paste -d, -s | awk -F ',' '{ printf "a.\t%s\nb.\t%s\nc.\t%s\nd.\t%s", $1, $2, $3, $4 }'	
 }
 
 print_feedback() {
