@@ -37,8 +37,6 @@ show_random_item() {
 	echo $SEPARATOR
 	
 	check_response
-	# update_stats $iid $response	
-	# is_mastered $iid
 
 	vared -p "show another question? enter y to continue; any other key to exit: " -c choice
 	case $choice in
@@ -106,14 +104,6 @@ update_stats() {
 	
 	sqlite3 quiz.db "update stats set attempts=${attempts}, rights=${rights}, streak=${streak}, mastered=$mastered where iid=$1"
 	echo "${BOLD}STATS: Attempts: ${attempts}, Rights: ${rights}, Streak: ${streak}, Mastered: ${mastered}${RESET}"	
-}
-
-
-is_mastered() {
-	mastered=$(sqlite3 quiz.db "select mastered from stats where iid=$1")
-	if [[ "$mastered" == 1 ]]; then
-		echo "${BLINK}CONGRATULATIONS! You have mastered this question! it will not show again.${RESET}"
-	fi
 }
 
 
