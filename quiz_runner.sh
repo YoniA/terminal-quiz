@@ -19,7 +19,7 @@ show_random_item() {
 	
 	# show only items that are not mastered yet
 	iid=$(sqlite3 quiz.db "select iid from stats where mastered=0 order by random() limit 1")
-	stem=$(sqlite3 quiz.db "select stem from items where iid=${iid}")
+ 	stem=$(sqlite3 quiz.db "select stem from items where iid=${iid}")
 	ans1=$(sqlite3 quiz.db "select ans1 from items where iid=${iid}")
 	ans2=$(sqlite3 quiz.db "select ans2 from items where iid=${iid}")
 	ans3=$(sqlite3 quiz.db "select ans3 from items where iid=${iid}")
@@ -60,9 +60,10 @@ print_title() {
 print_item() {
 	echo "$1"
 	echo $SEPARATOR
-	
-	# shuffle answer options
-	shuf -e $ans1 $ans2 $ans3 $ans4 | paste -d, -s | awk -F ',' '{ printf "a.\t%s\nb.\t%s\nc.\t%s\nd.\t%s", $1, $2, $3, $4 }'	
+	echo "a.\t$2"
+	echo "b.\t$3"
+	echo "c.\t$4"
+	echo "d.\t$5"
 }
 
 print_feedback() {
@@ -112,19 +113,21 @@ is_mastered() {
 
 check_response() {
 	# zsh equivalent to 'read -p' in bash
-	vared -p "answer (a/b/c/d): " -c response
+	vared -p "answer (a/b/c/d or s to skip): " -c response
 	case $response in
 		a|b|c|d) 
 			print_feedback $iid $response
 			;;
 			
+		s) 
+			show_random_item
+			;;
 		*) 
 			echo "invalid response. try again."
 			check_response;
 			;;
 	esac
 }
-
 
 show_random_item
 
