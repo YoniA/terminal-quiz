@@ -1,6 +1,8 @@
 # About
 
-A shell script that displays random questions in terminal. The default database contains questions about software development topics - Linux, Command line tools, bash, JavaScript, HTML, CSS, Rails, Angular etc. But it can also be used for foreign language learning, or anything you want to memorize.
+A shell script that displays random questions in terminal.
+The default database contains questions about software development topics - Linux, Command line tools, bash, JavaScript, HTML, CSS, Rails, Angular etc.
+But it can also be used for foreign language learning, or anything you want to memorize.
 
 Upon invocation, the script queries a custom `sqlite` database for a random question, displays it and gives the user feedback.
 The user can choose to continue, and get another question, or to exit the program.
