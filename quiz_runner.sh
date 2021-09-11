@@ -13,9 +13,8 @@ RESET='\e[0m'
 MASTERED_THRESHOLD=5
 
 
-
 show_random_item() {
-
+	clear
 	size=$(sqlite3 quiz.db "select count(*) from stats where mastered=0")
 	if [[ "$size" == "0" ]]; then
 		echo "no items to show. exiting."
@@ -38,6 +37,7 @@ show_random_item() {
 	
 	check_response
 
+	echo
 	vared -p "show another question? enter y to continue; any other key to exit: " -c choice
 	case $choice in
 		y) 
@@ -103,7 +103,7 @@ update_stats() {
 	fi
 	
 	sqlite3 quiz.db "update stats set attempts=${attempts}, rights=${rights}, streak=${streak}, mastered=$mastered where iid=$1"
-	echo "${BOLD}STATS: Attempts: ${attempts}, Rights: ${rights}, Streak: ${streak}, Mastered: ${mastered}${RESET}"	
+	echo "${BOLD}STATS:${RESET} Attempts: ${attempts}, Rights: ${rights}, Streak: ${streak}, Mastered: ${mastered}${RESET}"	
 }
 
 
