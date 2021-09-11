@@ -2,9 +2,14 @@
 
 
 SEPARATOR="\n\n"
+BOLD='\e[1m'
 RED='\e[31m'
 GREEN='\e[32m'
+BLUE_BG='\e[44m'
+YELLOW_BG='\e[43m'
+MAGENTA_BG='\e[45m'
 BLINK='\e[5m'
+RESET='\e[0m'
 MASTERED_THRESHOLD=5
 
 
@@ -32,15 +37,14 @@ show_random_item() {
 	echo $SEPARATOR
 	
 	check_response
-	update_stats $iid $response	
-	is_mastered $iid
+	# update_stats $iid $response	
+	# is_mastered $iid
 
 	vared -p "show another question? enter y to continue; any other key to exit: " -c choice
 	case $choice in
 		y) 
 			show_random_item
 			;;
-			
 		*) 
 			exit
 			;;
@@ -70,9 +74,9 @@ print_feedback() {
 	key=$(sqlite3 quiz.db "select key from keys where iid=$1")
 
 	if [[ "$key" == "$2" ]]; then
-		echo -e "your response $2 is ${GREEN}correct!"
+		echo -e "your response $2 is ${GREEN}correct!${RESET}"
 	else
-		echo -e "your response $2 is ${RED}wrong."
+		echo -e "your response $2 is ${RED}wrong.${RESET}"
 	fi
 }
 
@@ -91,6 +95,8 @@ update_stats() {
 		
 		if [[ "$streak" == "$MASTERED_THRESHOLD" ]]; then
 			((mastered++))
+			echo "${BLINK}${GREEN}CONGRATULATIONS!${RESET} You have mastered this question! it will not show again."
+
 		fi
 	else
 		zero=0
@@ -99,24 +105,24 @@ update_stats() {
 	fi
 	
 	sqlite3 quiz.db "update stats set attempts=${attempts}, rights=${rights}, streak=${streak}, mastered=$mastered where iid=$1"
-	echo "stats: attempts: ${attempts}, rights: ${rights}, streak=${streak}, mastered=${mastered}"	
+	echo "${BOLD}STATS: Attempts: ${attempts}, Rights: ${rights}, Streak: ${streak}, Mastered: ${mastered}${RESET}"	
 }
 
 
 is_mastered() {
 	mastered=$(sqlite3 quiz.db "select mastered from stats where iid=$1")
 	if [[ "$mastered" == 1 ]]; then
-		echo "${BLINK}CONGRATULATIONS! You have mastered this question! it will not show again."
+		echo "${BLINK}CONGRATULATIONS! You have mastered this question! it will not show again.${RESET}"
 	fi
 }
 
 
-check_response() {
-	# zsh equivalent to 'read -p' in bash
+check_response() { # zsh equivalent to 'read -p' in bash
 	vared -p "answer (a/b/c/d or s to skip): " -c response
 	case $response in
 		a|b|c|d) 
 			print_feedback $iid $response
+			update_stats $iid $response 
 			;;
 			
 		s) 
