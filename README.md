@@ -84,6 +84,7 @@ To execute a script form utils:
 * `reset_stats.sh` - reset all statistics (number of trials, streaks, mastered etc.) 
 * `empty_all_tables.sh` - wipe off all database content, leaving only empty tables. USE WITH CAUTION!. THIS OPERATION CANNOT BE UNDONE.
 * `dump_to_txt.sh` - write all records of `item` table to a txt file named `dump_timestamp.txt` (where `timestamp` is the actual datetime at the moment of creation).
+* `db_populator.sh` - populate db tables with content from a formatted questions file. see bellow.
 
 # Creating custom database content
 
@@ -91,14 +92,61 @@ If you'd like to replace the content of the default database that comes with the
 
 * note: run the utils script from the main directory, like so: `utils/empty_all_tables.sh`.
 
+# Automaticlly add questions from a file
+
+It is possible to populate all db tables with questions form a formatted question file. Saving the tedious work of doing it for each question manually with a gui tool (sqlitebrowser).
+
+to do so, carefully follow the steps bellow.
+1. under the main directory create a `questions` file (name is important!)
+2. populate the `questions` file with questions in the following format (this step is error-prone, so should be done carefully):
+```
+5
+---
+sample question body?
+---
+answer option 1
+---
+answer option 2
+---
+answer option 3
+---
+answer option 4
+---
+b
+###
+3
+---
+another sample question body?
+---
+answer option 1
+---
+answer option 2
+---
+answer option 3
+---
+answer option 4
+---
+c
+```
+
+In this format, the `###` separtes questions, `---` separates question parts.
+For each question, the first line is the question domain (shold be known in advance), then question body and answer options, separated by `---`. 
+the last line of its question is its key (a|b|c|d);
+
+
+With this format followed correctly, the `question` file is ready for upload. run the following command from the project directory:
+
+```bash
+utils/db_populator.sh questions
+```
 
 # Features that I may add in the future
 
 * Shuffle answers - anytime a question appears, its answer options are displayed in a random order
 * Show questions by topic - menu for topic selection
-* ~~enable skipping questions~~ :heavy_check_mark:
+* ~~Enable skipping questions~~ :heavy_check_mark:
 * Ageing algorithm - display questions of least success level. i.e, you will see the questions you struggle with the most again and again. As the streak of a question is incremented, the proirity of that question is lowered, in favor of harder questions (with lower streak level). This technique makes learning more efficient.
-* Automate db population with new questions from a file
+* ~~ Automate db population with new questions from a file~~ :heavy_check_mark:
 * Make all scripts db agnostic (pass db as a parameter)
 * Enable flags for invoking the script
 * Write a man page for the script
