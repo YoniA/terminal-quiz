@@ -99,5 +99,6 @@ If you'd like to replace the content of the default database that comes with the
 * ~~enable skipping questions~~ :heavy_check_mark:
 * Ageing algorithm - display questions of least success level. i.e, you will see the questions you struggle with the most again and again. As the streak of a question is incremented, the proirity of that question is lowered, in favor of harder questions (with lower streak level). This technique makes learning more efficient.
 * Automate db population with new questions from a file
+* Make all scripts db agnostic (pass db as a parameter)
 * Enable flags for invoking the script
 * Write a man page for the script

@@ -1,16 +1,17 @@
 #!/bin/zsh
 
 
-SEPARATOR="\n\n"
-BOLD='\e[1m'
-RED='\e[31m'
-GREEN='\e[32m'
-BLUE_BG='\e[44m'
-YELLOW_BG='\e[43m'
-MAGENTA_BG='\e[45m'
-BLINK='\e[5m'
-RESET='\e[0m'
-MASTERED_THRESHOLD=5
+readonly SEPARATOR="\n\n"
+readonly BOLD='\e[1m'
+readonly RED='\e[31m'
+readonly GREEN='\e[32m'
+readonly YELLOW='\e[93m'
+readonly BLUE_BG='\e[44m'
+readonly YELLOW_BG='\e[103m'
+readonly MAGENTA_BG='\e[45m'
+readonly BLINK='\e[5m'
+readonly RESET='\e[0m'
+readonly MASTERED_THRESHOLD=5
 
 
 show_random_item() {
@@ -38,7 +39,7 @@ show_random_item() {
 	check_response
 
 	echo
-	vared -p "show another question? enter y to continue; any other key to exit: " -c choice
+	vared -p "Show another question? Enter y to continue; any other key to exit: " -c choice
 	case $choice in
 		y) 
 			show_random_item
@@ -54,7 +55,7 @@ show_random_item() {
 print_title() {
 	topic=$(sqlite3 quiz.db "select title from domains natural join items_domains where iid=$1")
 	title="Topic: $topic"
-	echo "$title"
+	echo "${title}"
 	printf "%0.s-" {1..${#title}} 	
 	echo "\n"
 }
@@ -72,9 +73,9 @@ print_feedback() {
 	key=$(sqlite3 quiz.db "select key from keys where iid=$1")
 
 	if [[ "$key" == "$2" ]]; then
-		echo -e "your response $2 is ${GREEN}correct!${RESET}"
+		echo -e "Your response $2 is ${GREEN}correct!${RESET}"
 	else
-		echo -e "your response $2 is ${RED}wrong.${RESET}"
+		echo -e "Your response $2 is ${RED}wrong.${RESET}"
 	fi
 }
 
@@ -103,12 +104,13 @@ update_stats() {
 	fi
 	
 	sqlite3 quiz.db "update stats set attempts=${attempts}, rights=${rights}, streak=${streak}, mastered=$mastered where iid=$1"
-	echo "${BOLD}STATS:${RESET} Attempts: ${attempts}, Rights: ${rights}, Streak: ${streak}, Mastered: ${mastered}${RESET}"	
+	echo
+	echo "${BOLD}STATS:${RESET} Attempts: ${attempts}, Rights: ${rights}, Streak: ${streak}, Mastered: ${mastered}"
 }
 
 
 check_response() { # zsh equivalent to 'read -p' in bash
-	vared -p "answer (a/b/c/d or s to skip): " -c response
+	vared -p "Answer (a/b/c/d or s to skip): " -c response
 	case $response in
 		a|b|c|d) 
 			print_feedback $iid $response
@@ -119,7 +121,7 @@ check_response() { # zsh equivalent to 'read -p' in bash
 			show_random_item
 			;;
 		*) 
-			echo "invalid response. try again."
+			echo "Invalid response. Try again."
 			check_response;
 			;;
 	esac
