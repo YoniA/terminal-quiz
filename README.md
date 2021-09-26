@@ -70,7 +70,7 @@ These tables are outlined bellow:
 * `did` - domain id
 
 
-# The utils directory
+# The utils directory :toolbox:
 
 The utils directory contains utility scripts such as reset all statistics, show the number of questions from each topic, wipe off all db content, etc.
 To execute a script form utils:
@@ -92,9 +92,10 @@ If you'd like to replace the content of the default database that comes with the
 
 * note: run the utils script from the main directory, like so: `utils/empty_all_tables.sh`.
 
-# Automaticlly add questions from a file
+# Automaticlly add questions from a file :robot:
 
 It is possible to populate all db tables with questions form a formatted question file. Saving the tedious work of doing it for each question manually with a gui tool (sqlitebrowser).
+
 To do so, carefully follow the steps bellow.
 
 1. under the main directory create a `questions` file (name is important!)
@@ -131,7 +132,7 @@ c
 
 In this format, the `###` separtes questions, `---` separates question parts.
 For each question, the first line is the question domain (shold be known in advance), then question body and answer options, separated by `---`. 
-The last line of its question is its key (a|b|c|d);
+The last line of the question is its anwer key (a|b|c|d);
 
 
 3. With this format followed correctly, the `question` file is ready for upload. run the following command from the project directory:
@@ -140,7 +141,7 @@ The last line of its question is its key (a|b|c|d);
 utils/db_populator.sh questions
 ```
 
-# Features that I may add in the future
+# Features that I may add in the future :sparkles:
 
 * Shuffle answers - anytime a question appears, its answer options are displayed in a random order
 * Show questions by topic - menu for topic selection
