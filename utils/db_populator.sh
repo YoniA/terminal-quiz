@@ -1,11 +1,12 @@
 #!/bin/bash
 
+db=${1:-quiz.db}
 
 # prepare questions format
 awk 'BEGIN {RS="###"; ORS="###"} {print $0}' questions | sed 's/^$/ || CHAR(10) || /' | paste -d "" -s | sed 's/###/\n/g' | sed '/^$/d' > records.tmp
 #awk 'BEGIN {RS="###"; ORS="###"} {print $0}' questions | sed 's/^$/ /' | paste -d "" -s | sed 's/###/\n/g' | sed '/^$/d' > records.tmp
 
-iid=$(sqlite3 quiz.db "select max(iid) from items")
+iid=$(sqlite3 $db "select max(iid) from items")
 while read line; do
 	((++iid))
 	echo $line | sed "s/^/$iid---/" > record.tmp && \
@@ -19,10 +20,10 @@ while read line; do
 	ans3=$(awk -F '---' '{print $6}' record.tmp)
 	ans4=$(awk -F '---' '{print $7}' record.tmp)
 
-	sqlite3 quiz.db "insert into items values (\"$iid\",\"$stem\",\"$ans1\",\"$ans2\",\"$ans3\",\"$ans4\")" && \
-	sqlite3 quiz.db "insert into keys values (\"$iid\",\"$key\")" && \
-	sqlite3 quiz.db "insert into items_domains values(\"$iid\",\"$did\")" && \
-	sqlite3 quiz.db "insert into stats values (\"$iid\",0,0,0,0)"
+	sqlite3 $db "insert into items values (\"$iid\",\"$stem\",\"$ans1\",\"$ans2\",\"$ans3\",\"$ans4\")" && \
+	sqlite3 $db "insert into keys values (\"$iid\",\"$key\")" && \
+	sqlite3 $db "insert into items_domains values(\"$iid\",\"$did\")" && \
+	sqlite3 $db "insert into stats values (\"$iid\",0,0,0,0)"
 done < records.tmp
 
 # delete temp files

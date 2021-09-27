@@ -12,23 +12,23 @@ readonly MAGENTA_BG='\e[45m'
 readonly BLINK='\e[5m'
 readonly RESET='\e[0m'
 readonly MASTERED_THRESHOLD=5
-
+db=${1:-quiz.db}
 
 show_random_item() {
 	clear
-	size=$(sqlite3 quiz.db "select count(*) from stats where mastered=0")
+	size=$(sqlite3 $db "select count(*) from stats where mastered=0")
 	if [[ "$size" == "0" ]]; then
 		echo "no items to show. exiting."
 		exit
 	fi
 	
 	# show only items that are not mastered yet
-	iid=$(sqlite3 quiz.db "select iid from stats where mastered=0 order by random() limit 1")
- 	stem=$(sqlite3 quiz.db "select stem from items where iid=${iid}")
-	ans1=$(sqlite3 quiz.db "select ans1 from items where iid=${iid}")
-	ans2=$(sqlite3 quiz.db "select ans2 from items where iid=${iid}")
-	ans3=$(sqlite3 quiz.db "select ans3 from items where iid=${iid}")
-	ans4=$(sqlite3 quiz.db "select ans4 from items where iid=${iid}")
+	iid=$(sqlite3 $db "select iid from stats where mastered=0 order by random() limit 1")
+ 	stem=$(sqlite3 $db "select stem from items where iid=${iid}")
+	ans1=$(sqlite3 $db "select ans1 from items where iid=${iid}")
+	ans2=$(sqlite3 $db "select ans2 from items where iid=${iid}")
+	ans3=$(sqlite3 $db "select ans3 from items where iid=${iid}")
+	ans4=$(sqlite3 $db "select ans4 from items where iid=${iid}")
 
 	echo "\n"
 	print_title $iid
@@ -53,7 +53,7 @@ show_random_item() {
 
 
 print_title() {
-	topic=$(sqlite3 quiz.db "select title from domains natural join items_domains where iid=$1")
+	topic=$(sqlite3 $db "select title from domains natural join items_domains where iid=$1")
 	title="Topic: $topic"
 	echo "${title}"
 	printf "%0.s-" {1..${#title}} 	
@@ -69,8 +69,8 @@ print_item() {
 	echo "d.\t$5"
 }
 
-print_feedback() {
-	key=$(sqlite3 quiz.db "select key from keys where iid=$1")
+print_fee$dback() {
+	key=$(sqlite3 $db "select key from keys where iid=$1")
 
 	if [[ "$key" == "$2" ]]; then
 		echo -e "Your response $2 is ${GREEN}correct!${RESET}"
@@ -80,14 +80,14 @@ print_feedback() {
 }
 
 update_stats() {
-	attempts=$(sqlite3 quiz.db "select attempts from stats where iid=$1")
+	attempts=$(sqlite3 $db "select attempts from stats where iid=$1")
 	((attempts++))
 	
-	rights=$(sqlite3 quiz.db "select rights from stats where iid=$1")
-	streak=$(sqlite3 quiz.db "select streak from stats where iid=$1")
+	rights=$(sqlite3 $db "select rights from stats where iid=$1")
+	streak=$(sqlite3 $db "select streak from stats where iid=$1")
 	mastered=0;
 
-	key=$(sqlite3 quiz.db "select key from keys where iid=$1")
+	key=$(sqlite3 $db "select key from keys where iid=$1")
 	if [[ "$key" == "$2" ]]; then
 		((rights++))
 		((streak++))
@@ -103,7 +103,7 @@ update_stats() {
 		mastered=$zero
 	fi
 	
-	sqlite3 quiz.db "update stats set attempts=${attempts}, rights=${rights}, streak=${streak}, mastered=$mastered where iid=$1"
+	sqlite3 $db "update stats set attempts=${attempts}, rights=${rights}, streak=${streak}, mastered=$mastered where iid=$1"
 	echo
 	echo "${BOLD}STATS:${RESET} Attempts: ${attempts}, Rights: ${rights}, Streak: ${streak}, Mastered: ${mastered}"
 }
@@ -113,7 +113,7 @@ check_response() { # zsh equivalent to 'read -p' in bash
 	vared -p "Answer (a/b/c/d or s to skip): " -c response
 	case $response in
 		a|b|c|d) 
-			print_feedback $iid $response
+			print_fee$dback $iid $response
 			update_stats $iid $response 
 			;;
 			

@@ -25,9 +25,12 @@ When a certain question is answered correctly a consecutive number of times, it 
 1. clone this repo to your machine
 2. `cd` into the cloned directory
 3. add execute permissions: `sudo chmod +x quiz_runner.sh` 
-4. run `./quiz_runner.sh`
+4. run `./quiz_runner.sh [database]`
 
-this should display a quiz on the terminal.
+This should display a random question in the terminal.
+
+The `database` parameter, in the last step, is optional, and if invoked without it, the script will query the default `quiz.db` that comes with the project.
+You can suplly any other database, given that it is structured exactly as described bellow.
 
 
 # DB table description
@@ -76,7 +79,10 @@ The utils directory contains utility scripts such as reset all statistics, show 
 To execute a script form utils:
  
 1. add execute permissions: `sudo chmod +x utils/util_name.sh` (where `util_name` is the actual name of the util, as detailed bellow). 
-2. run `utils/util_name.sh`
+2. run `utils/util_name.sh [database]`
+
+The `database` parameter is optional, and if invoked without it the script will query the default `quiz.db` that comes with the project.
+You can suplly any other database, given that it is structured exactly as described above.
 
 ### util scripts
 
@@ -148,6 +154,6 @@ utils/db_populator.sh questions
 * ~~Enable skipping questions~~ :heavy_check_mark:
 * Ageing algorithm - display questions of least success level. i.e, you will see the questions you struggle with the most again and again. As the streak of a question is incremented, the proirity of that question is lowered, in favor of harder questions (with lower streak level). This technique makes learning more efficient.
 * ~~Automate db population with new questions from a file~~ :heavy_check_mark:
-* Make all scripts db agnostic (pass db as a parameter)
+* ~~Make all scripts db agnostic (pass db as a parameter)~~ :heavy_check_mark:
 * Enable flags for invoking the script
 * Write a man page for the script
