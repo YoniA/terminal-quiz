@@ -1,10 +1,10 @@
 # About
 
-A shell script that displays random questions in terminal.
+A collection of shell scripts that display random questions in terminal.
 The default database contains questions about software development topics - Linux, Command line tools, bash, JavaScript, HTML, CSS, Rails, Angular etc.
 But it can also be used for foreign language learning, or anything you want to memorize.
 
-Upon invocation, the script queries a custom `sqlite` database for a random question, displays it and gives the user feedback.
+Upon invocation, the runner script queries a custom `sqlite` database for a random question, displays it and gives the user feedback.
 The user can choose to continue, and get another question, or to exit the program.
 
 After every response, some basic statistics are displayed and saved to the database.
@@ -29,8 +29,8 @@ When a certain question is answered correctly a consecutive number of times, it 
 
 This should display a random question in the terminal.
 
-The `database` parameter, in the last step, is optional, and if invoked without it, the script will query the default `quiz.db` that comes with the project.
-You can suplly any other database, given that it is structured exactly as described bellow.
+The `database` parameter in the last step is optional, and if invoked without it, the script will query the default `quiz.db` that comes with the project.
+You can supply any other database, given that it is structured exactly as described in [DB table description](#db-table-description).
 
 
 # DB table description
@@ -82,7 +82,8 @@ To execute a script form utils:
 2. run `utils/util_name.sh [database]`
 
 The `database` parameter is optional, and if invoked without it the script will query the default `quiz.db` that comes with the project.
-You can suplly any other database, given that it is structured exactly as described above.
+You can supply any other database, given that it is structured exactly as described in [DB table description](#db-table-description).
+
 
 ### util scripts
 
