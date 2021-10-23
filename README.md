@@ -90,7 +90,7 @@ To execute a script form utils:
 * `empty_all_tables.sh [database]` - wipe off all database content, leaving only empty tables. USE WITH CAUTION!. THIS OPERATION CANNOT BE UNDONE.
 * `dump_to_txt.sh [datababse]` - write all records of `item` table to a txt file named `dump_timestamp.txt` (where `timestamp` is the actual datetime at the moment of creation).
 * `db_populator.sh [database]` - populate db tables with content from a formatted questions file. see bellow.
-* `create_question_template.sh [number]` - create a `questions.txt` file under main directory, with empty question format. If the optional number is given, it creates this number of empty questions template, as in [Automate new questions upload](#automate-new-questions-upload).
+* `create_question_template.sh [number]` - create a `questions.txt` file under main directory, with empty question format. If the optional number is given, it creates this number of empty questions template, as in [Automate new questions upload](#automate-new-questions-upload-:robot:).
 
 
 In all scripts above,the `database` parameter is optional, and if invoked without it the script will query the default `quiz.db` that comes with the project.
@@ -105,7 +105,7 @@ If you'd like to replace the content of the default database that comes with the
 
 # Automate new questions upload :robot:
 
-It is possible to populate all db tables with questions form a formatted question file. Saving the tedious work of doing it for each question manually with a gui tool (sqlitebrowser).
+It is possible to populate all DB tables with questions form a formatted question file. Saving the tedious work of doing it for each question manually with a GUI tool (sqlitebrowser).
 
 To do so, carefully follow the steps bellow.
 
@@ -149,7 +149,7 @@ The last line of the question is its anwer key (a|b|c|d);
 #### caveats:
 
 * question body answer options cannot span multiple lines
-* double quotes is not allowed
+* double quotes are not allowed
 
 3. With this format followed correctly, the `question` file is ready for upload. run the following command from the project directory:
 
