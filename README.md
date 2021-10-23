@@ -79,19 +79,23 @@ The utils directory contains utility scripts such as reset all statistics, show 
 To execute a script form utils:
  
 1. add execute permissions: `sudo chmod +x utils/util_name.sh` (where `util_name` is the actual name of the util, as detailed bellow). 
-2. run `utils/util_name.sh [database]`
+2. run `utils/util_name.sh [options]`
 
-The `database` parameter is optional, and if invoked without it the script will query the default `quiz.db` that comes with the project.
-You can supply any other database, given that it is structured exactly as described in [DB table description](#db-table-description).
 
 
 ### util scripts
 
-* `db_overview.sh` - print question distrubution by topic in the database
-* `reset_stats.sh` - reset all statistics (number of trials, streaks, mastered etc.) 
-* `empty_all_tables.sh` - wipe off all database content, leaving only empty tables. USE WITH CAUTION!. THIS OPERATION CANNOT BE UNDONE.
-* `dump_to_txt.sh` - write all records of `item` table to a txt file named `dump_timestamp.txt` (where `timestamp` is the actual datetime at the moment of creation).
-* `db_populator.sh` - populate db tables with content from a formatted questions file. see bellow.
+* `db_overview.sh [database]` - print question distrubution by topic in the database
+* `reset_stats.sh [database]` - reset all statistics (number of trials, streaks, mastered etc.) 
+* `empty_all_tables.sh [database]` - wipe off all database content, leaving only empty tables. USE WITH CAUTION!. THIS OPERATION CANNOT BE UNDONE.
+* `dump_to_txt.sh [datababse]` - write all records of `item` table to a txt file named `dump_timestamp.txt` (where `timestamp` is the actual datetime at the moment of creation).
+* `db_populator.sh [database]` - populate db tables with content from a formatted questions file. see bellow.
+* `create_question_template.sh [number]` - create a `questions.txt` file under main directory, with empty question format. If the optional number is given, it creates this number of empty questions template, as in [Automate new questions upload](#automate-new-questions-upload).
+
+
+In all scripts above,the `database` parameter is optional, and if invoked without it the script will query the default `quiz.db` that comes with the project.
+You can supply any other database, given that it is structured exactly as described in [DB table description](#db-table-description).
+
 
 # Creating custom database content
 
@@ -99,7 +103,7 @@ If you'd like to replace the content of the default database that comes with the
 
 * note: run the utils script from the main directory, like so: `utils/empty_all_tables.sh`.
 
-# Automaticlly add questions from a file :robot:
+# Automate new questions upload :robot:
 
 It is possible to populate all db tables with questions form a formatted question file. Saving the tedious work of doing it for each question manually with a gui tool (sqlitebrowser).
 
@@ -142,10 +146,15 @@ For each question, the first line is the question domain (shold be known in adva
 The last line of the question is its anwer key (a|b|c|d);
 
 
+#### caveats:
+
+* question body answer options cannot span multiple lines
+* double quotes is not allowed
+
 3. With this format followed correctly, the `question` file is ready for upload. run the following command from the project directory:
 
 ```bash
-utils/db_populator.sh questions
+utils/db_populator.sh
 ```
 
 # Features that I may add in the future :sparkles:
