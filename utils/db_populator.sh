@@ -3,8 +3,8 @@
 db=${1:-quiz.db}
 
 # prepare questions format
-awk 'BEGIN {RS="###"; ORS="###"} {print $0}' questions | sed 's/^$/ || CHAR(10) || /' | paste -d "" -s | sed 's/###/\n/g' | sed '/^$/d' > records.tmp
-#awk 'BEGIN {RS="###"; ORS="###"} {print $0}' questions | sed 's/^$/ /' | paste -d "" -s | sed 's/###/\n/g' | sed '/^$/d' > records.tmp
+awk 'BEGIN {RS="###"; ORS="###"} {print $0}' questions.txt | sed 's/^$/ || CHAR(10) || /' | paste -d "" -s | sed 's/###/\n/g' | sed '/^$/d' > records.tmp
+#awk 'BEGIN {RS="###"; ORS="###"} {print $0}' questions.txt | sed 's/^$/ /' | paste -d "" -s | sed 's/###/\n/g' | sed '/^$/d' > records.tmp
 
 iid=$(sqlite3 $db "select max(iid) from items")
 while read line; do

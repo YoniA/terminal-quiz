@@ -13,10 +13,13 @@ readonly BLINK='\e[5m'
 readonly RESET='\e[0m'
 readonly MASTERED_THRESHOLD=5
 db=${1:-quiz.db}
+title=${2:-title}
 
 show_random_item() {
 	clear
 	size=$(sqlite3 $db "select count(*) from stats where mastered=0")
+	#size=$(sqlite3 $db "select count(*) from stats natural join items_domains natural join domains where title=${title} and mastered=0")
+
 	if [[ "$size" == "0" ]]; then
 		echo "no items to show. exiting."
 		exit
