@@ -43,11 +43,13 @@ You can supply any other database, given that it is structured exactly as descri
 
 * `./quiz_runner.sh` - show random questions from the default database.
 * `./quiz_runner.sh -t Ruby` - show random qustions about Ruby from the default database.
-
-Note: You should know the topic name in advance. This can be done by running first `utils/db_overview.sh`. This will give you an overview of the content in the database.
-
 * `./quiz_runner.sh -d music.db` - show random questions from `music.db`
 * `./quiz_runner.sh -d music.db -t Chords` - show random questions about Chords from the `music.db`.
+
+
+Note: You should know the topic name in advance. This can be done by running first `utils/db_overview.sh`. This will give you an overview of the content in the database.
+Note: if topic name is having several words, enclose it by double quoutes: `./quiz_runner.sh -t "Design Patterns"`.
+
 
 # DB table description
 
@@ -91,6 +93,15 @@ These tables are outlined bellow:
 * `did` - domain id
 
 
+
+# Ageing algorithm
+
+As you answer questions, basic statistics are collected, such as success rate, streak (consecutive correct answers for the question), etc. As the streak of a question is incremented, the proirity of that question is lowered, in favor of harder questions (with lower streak level). The script fetches a random question with the lowest streak level. This means that you will see the questions you struggle with the most again and again.
+
+This technique makes learning more efficient.
+
+
+
 # The utils directory :toolbox:
 
 The utils directory contains utility scripts such as reset all statistics, show the number of questions from each topic, wipe off all db content, etc.
@@ -128,8 +139,8 @@ It is possible to populate all DB tables with questions form a formatted questio
 To do so, carefully follow the steps bellow.
 
 1. decide in advance how many questions you want to add in a single batch.
-2. run `utils/create_question_template.sh [number]`,  where `number` is the number you decided on, in the previous section. This will create a `questions.txt` file under the main project directory. 
-2. populate the `questions.txt` file with questions in the following format (this step is error-prone, so should be done carefully):
+2. run `utils/create_question_template.sh [number]`,  where `number` is the number you decided on, in the previous section. This will create a `questions.txt` file under the main project directory, with an empty template. 
+2. populate the `questions.txt` file with questions in the following format (see caveats bellow):
 ```
 5
 ---
@@ -185,7 +196,7 @@ If not output is displayed, everything executed correctly.
 * Shuffle answers - anytime a question appears, its answer options are displayed in a random order
 * ~~Show questions by topic~~ :heavy_check_mark:
 * ~~Enable skipping questions~~ :heavy_check_mark:
-* Ageing algorithm - display questions of least success level. i.e, you will see the questions you struggle with the most again and again. As the streak of a question is incremented, the proirity of that question is lowered, in favor of harder questions (with lower streak level). This technique makes learning more efficient.
+* ~~Ageing algorithm - display questions of least success rate, based on streak values~~ :heavy_check_mark:
 * ~~Automate db population with new questions from a file~~ :heavy_check_mark:
 * ~~Make all scripts db agnostic (pass db as a parameter)~~ :heavy_check_mark:
 * ~~Enable flags for invoking the script~~ :heavy_check_mark:

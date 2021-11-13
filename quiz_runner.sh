@@ -39,7 +39,7 @@ show_random_item() {
 	fi
 	
 	# show only items that are not mastered yet
-	iid=$(sqlite3 $db "select iid from stats natural join items_domains natural join domains where title=\"${title}\" and mastered=0 order by random() limit 1")
+	iid=$(sqlite3 $db "select iid from stats natural join items_domains natural join domains where title=\"${title}\" and mastered=0 order by streak, random() limit 1")
 
  	stem=$(sqlite3 $db "select stem from items where iid=${iid}")
 	ans1=$(sqlite3 $db "select ans1 from items where iid=${iid}")
