@@ -127,8 +127,9 @@ It is possible to populate all DB tables with questions form a formatted questio
 
 To do so, carefully follow the steps bellow.
 
-1. under the main directory create a `questions` file (name is important!)
-2. populate the `questions` file with questions in the following format (this step is error-prone, so should be done carefully):
+1. decide in advance how many questions you want to add in a single batch.
+2. run `utils/create_question_template.sh [number]`,  where `number` is the number you decided on, in the previous section. This will create a `questions.txt` file under the main project directory. 
+2. populate the `questions.txt` file with questions in the following format (this step is error-prone, so should be done carefully):
 ```
 5
 ---
@@ -170,19 +171,22 @@ The last line of the question is its anwer key (a|b|c|d);
 * question body answer options cannot span multiple lines.
 * double quotes are not allowed anywhere.
 
-3. With this format followed correctly, the `question` file is ready for upload. run the following command from the project directory:
+3. With this format followed correctly, the `questions.txt` file is ready for upload. run the following command from the project directory:
 
 ```bash
 utils/db_populator.sh
 ```
 
+If not output is displayed, everything executed correctly.
+
+
 # Features that I may add in the future :sparkles:
 
 * Shuffle answers - anytime a question appears, its answer options are displayed in a random order
-* ~~Show questions by topic - menu for topic selection~~ :heavy_check_mark:
+* ~~Show questions by topic~~ :heavy_check_mark:
 * ~~Enable skipping questions~~ :heavy_check_mark:
 * Ageing algorithm - display questions of least success level. i.e, you will see the questions you struggle with the most again and again. As the streak of a question is incremented, the proirity of that question is lowered, in favor of harder questions (with lower streak level). This technique makes learning more efficient.
 * ~~Automate db population with new questions from a file~~ :heavy_check_mark:
 * ~~Make all scripts db agnostic (pass db as a parameter)~~ :heavy_check_mark:
-* Enable flags for invoking the script
+* ~~Enable flags for invoking the script~~ :heavy_check_mark:
 * Write a man page for the script
