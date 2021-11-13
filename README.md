@@ -25,7 +25,7 @@ When a certain question is answered correctly a consecutive number of times, it 
 1. clone this repo to your machine
 2. `cd` into the cloned directory
 3. add execute permissions: `sudo chmod +x quiz_runner.sh` 
-4. run `./quiz_runner.sh [-d database] [-t topic]`
+4. run `./quiz_runner.sh
 
 This should display a random question in the terminal.
 
@@ -41,12 +41,13 @@ You can supply any other database, given that it is structured exactly as descri
 
 ### examples:
 
-* `./quiz_runner.sh` - show a random question with a random topic from the default database (`quiz.db`)
+* `./quiz_runner.sh` - show a random question with a random topic from the default database.
 * `./quiz_runner.sh -t Ruby` - show a random Ruby question from the default database.
+
 Note: You should know the topic name in advance. This can be done by running first `utils/db_overview.sh`. This will give you an overview of the content in the database.
 
-* `./quiz_runner.sh -d music.db` - show a random question from `music.db`
-* `./quiz_runner.sh -d music.db -t Chords` - show a random question about Chords from the `music.db`.
+* `./quiz_runner.sh -d music.db` - show random questions from `music.db`
+* `./quiz_runner.sh -d music.db -t Chords` - show random questions from the Chords topic from the `music.db`.
 
 # DB table description
 
@@ -107,7 +108,7 @@ To execute a script form utils:
 * `empty_all_tables.sh [database]` - wipe off all database content, leaving only empty tables. USE WITH CAUTION!. THIS OPERATION CANNOT BE UNDONE.
 * `dump_to_txt.sh [datababse]` - write all records of `item` table to a txt file named `dump_timestamp.txt` (where `timestamp` is the actual datetime at the moment of creation).
 * `db_populator.sh [database]` - populate db tables with content from a formatted questions file. see bellow.
-* `create_question_template.sh [number]` - create a `questions.txt` file under main directory, with empty question format. If the optional number is given, it creates this number of empty questions template, as in [Automate new questions upload](#automate-new-questions-upload).
+* `create_question_template.sh [number]` - create a `questions.txt` file under main directory, with empty question format. If the optional number is given, it creates this number of empty questions template, as in [Automate new questions upload](#automate-new-questions-uploadi-robot).
 
 
 In all scripts above,the `database` parameter is optional, and if invoked without it the script will query the default `quiz.db` that comes with the project.
