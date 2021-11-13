@@ -25,7 +25,7 @@ When a certain question is answered correctly a consecutive number of times, it 
 1. clone this repo to your machine
 2. `cd` into the cloned directory
 3. add execute permissions: `sudo chmod +x quiz_runner.sh` 
-4. run `./quiz_runner.sh
+4. run `./quiz_runner.sh`
 
 This should display a random question in the terminal.
 
@@ -160,14 +160,15 @@ c
 ```
 
 In this format, the `###` separtes questions, `---` separates question parts.
-For each question, the first line is the question domain (shold be known in advance), then question body and answer options, separated by `---`. 
+For each question, the first line is the domain id, then question body and answer options, separated by `---`. 
 The last line of the question is its anwer key (a|b|c|d);
 
 
 #### caveats:
 
-* question body answer options cannot span multiple lines
-* double quotes are not allowed
+* the domain id should be known in advance. You can find it by running `utils/db_overview.sh`.
+* question body answer options cannot span multiple lines.
+* double quotes are not allowed anywhere.
 
 3. With this format followed correctly, the `question` file is ready for upload. run the following command from the project directory:
 
