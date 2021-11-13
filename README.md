@@ -25,16 +25,33 @@ When a certain question is answered correctly a consecutive number of times, it 
 1. clone this repo to your machine
 2. `cd` into the cloned directory
 3. add execute permissions: `sudo chmod +x quiz_runner.sh` 
-4. run `./quiz_runner.sh [database]`
+4. run `./quiz_runner.sh [-d database] [-t topic]`
 
 This should display a random question in the terminal.
 
-The `database` parameter in the last step is optional, and if invoked without it, the script will query the default `quiz.db` that comes with the project.
+
+# Synopsis
+
+The full command syntax is `./quiz_runner.sh [-d database] [-t topic]`.
+
+The `-d` and `-t` flags are optional, and when invoked without them a random topic question from the default database (that comes with the clone) will be displayed.
+
 You can supply any other database, given that it is structured exactly as described in [DB table description](#db-table-description).
 
 
+### examples:
+
+* `./quiz_runner.sh` - show a random question with a random topic from the default database (`quiz.db`)
+* `./quiz_runner.sh -t Ruby` - show a random Ruby question from the default database.
+Note: You should know the topic name in advance. This can be done by running first `utils/db_overview.sh`. This will give you an overview of the content in the database.
+
+* `./quiz_runner.sh -d music.db` - show a random question from `music.db`
+* `./quiz_runner.sh -d music.db -t Chords` - show a random question about Chords from the `music.db`.
+
 # DB table description
-The default DB is created according to the following schemas:
+
+The default databse, `quiz.db`, is created according to the following schemas:
+
 ```sql
 CREATE TABLE items(iid integer primary key, stem text not null, ans1 text, ans2 text, ans3 text, ans4 text);
 CREATE TABLE keys(iid integer not null, key string not null, foreign key (iid) references items (iid));
@@ -90,7 +107,7 @@ To execute a script form utils:
 * `empty_all_tables.sh [database]` - wipe off all database content, leaving only empty tables. USE WITH CAUTION!. THIS OPERATION CANNOT BE UNDONE.
 * `dump_to_txt.sh [datababse]` - write all records of `item` table to a txt file named `dump_timestamp.txt` (where `timestamp` is the actual datetime at the moment of creation).
 * `db_populator.sh [database]` - populate db tables with content from a formatted questions file. see bellow.
-* `create_question_template.sh [number]` - create a `questions.txt` file under main directory, with empty question format. If the optional number is given, it creates this number of empty questions template, as in [Automate new questions upload](#automate-new-questions-upload-:robot:).
+* `create_question_template.sh [number]` - create a `questions.txt` file under main directory, with empty question format. If the optional number is given, it creates this number of empty questions template, as in [Automate new questions upload](#automate-new-questions-upload).
 
 
 In all scripts above,the `database` parameter is optional, and if invoked without it the script will query the default `quiz.db` that comes with the project.
@@ -160,7 +177,7 @@ utils/db_populator.sh
 # Features that I may add in the future :sparkles:
 
 * Shuffle answers - anytime a question appears, its answer options are displayed in a random order
-* Show questions by topic - menu for topic selection
+* ~~Show questions by topic - menu for topic selection~~ :heavy_check_mark:
 * ~~Enable skipping questions~~ :heavy_check_mark:
 * Ageing algorithm - display questions of least success level. i.e, you will see the questions you struggle with the most again and again. As the streak of a question is incremented, the proirity of that question is lowered, in favor of harder questions (with lower streak level). This technique makes learning more efficient.
 * ~~Automate db population with new questions from a file~~ :heavy_check_mark:

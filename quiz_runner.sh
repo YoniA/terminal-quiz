@@ -12,21 +12,35 @@ readonly MAGENTA_BG='\e[45m'
 readonly BLINK='\e[5m'
 readonly RESET='\e[0m'
 readonly MASTERED_THRESHOLD=5
-db=${1:-quiz.db}
-title=${2:-title}
+db="quiz.db"
+title="title"
+
+while getopts "d:t:" opt
+	do
+        case $opt in
+        d)
+		db=$OPTARG 
+                ;;
+
+        t)
+		title=$OPTARG
+                ;;
+        esac
+done
+
+
 
 show_random_item() {
 	clear
-	size=$(sqlite3 $db "select count(*) from stats where mastered=0")
-	#size=$(sqlite3 $db "select count(*) from stats natural join items_domains natural join domains where title=${title} and mastered=0")
-
+	size=$(sqlite3 $db "select count(*) from stats natural join items_domains natural join domains where title=\"${title}\" and mastered=0")
 	if [[ "$size" == "0" ]]; then
 		echo "no items to show. exiting."
 		exit
 	fi
 	
 	# show only items that are not mastered yet
-	iid=$(sqlite3 $db "select iid from stats where mastered=0 order by random() limit 1")
+	iid=$(sqlite3 $db "select iid from stats natural join items_domains natural join domains where title=\"${title}\" and mastered=0 order by random() limit 1")
+
  	stem=$(sqlite3 $db "select stem from items where iid=${iid}")
 	ans1=$(sqlite3 $db "select ans1 from items where iid=${iid}")
 	ans2=$(sqlite3 $db "select ans2 from items where iid=${iid}")
@@ -57,9 +71,9 @@ show_random_item() {
 
 print_title() {
 	topic=$(sqlite3 $db "select title from domains natural join items_domains where iid=$1")
-	title="Topic: $topic"
-	echo "${title}"
-	printf "%0.s-" {1..${#title}} 	
+	title_line="Topic: $topic"
+	echo $title_line
+	printf "%0.s-" {1..${#title_line}} 	
 	echo "\n"
 }
 
