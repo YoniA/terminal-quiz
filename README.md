@@ -48,6 +48,7 @@ You can supply any other database, given that it is structured exactly as descri
 
 
 Note: You should know the topic name in advance. This can be done by running first `utils/db_overview.sh`. This will give you an overview of the content in the database.
+
 Note: if topic name is having several words, enclose it by double quoutes: `./quiz_runner.sh -t "Design Patterns"`.
 
 
