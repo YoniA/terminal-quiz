@@ -85,7 +85,7 @@ These tables are outlined bellow:
 * `streak` - number of consecutive correct answers. incremented by 1 upon correct answer; set to 0 otherwise.
 * `mastered` - if `streak` reaches predefined threshold (defined as `MASTERED_THRESHOLD` in `quiz_runner.sh`, the question is considered mastered, and won't show again.
 
-### domains
+## domains
 * `did` - domain id
 * `title` - domain name
 
@@ -175,6 +175,13 @@ c
 In this format, the `###` separtes questions, `---` separates question parts.
 For each question, the first line is the domain id, then question body and answer options, separated by `---`. 
 The last line of the question is its anwer key (a|b|c|d);
+
+
+#### Webpage editor
+
+Alternatively, you can create questions in your browser here: https://angular-ivy-xx8u5j.stackblitz.io/menu 
+
+After creating some questions, use the "Export questions" buton to generate a txt file in the format described above.
 
 
 #### caveats:
