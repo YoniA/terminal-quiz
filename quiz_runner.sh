@@ -15,16 +15,22 @@ readonly MASTERED_THRESHOLD=5
 db="quiz.db"
 title="title"
 
-while getopts "d:t:" opt
+while getopts "d:t:h" opt
 	do
         case $opt in
         d)
-		db=$OPTARG 
-                ;;
+					db=$OPTARG 
+					;;
 
         t)
-		title=$OPTARG
-                ;;
+					title=$OPTARG
+					;;
+
+				h)
+					echo "USAGE:"
+					echo "./quiz_runner.sh [-d database] [-t topic]"
+					exit
+					;;
         esac
 done
 
