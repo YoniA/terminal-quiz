@@ -16,7 +16,6 @@ When a certain question is answered correctly a consecutive number of times, it 
 
 # Prerequisites
 
-* a terminal with `zsh` shell
 * `sqlite3`
 
 
@@ -187,8 +186,7 @@ After creating some questions, use the "Export questions" buton to generate a tx
 #### caveats:
 
 * the domain id should be known in advance. You can find it by running `utils/db_overview.sh`.
-* question body answer options cannot span multiple lines.
-* double quotes are not allowed anywhere.
+* answer options cannot span multiple lines (each answer option in a single line).
 
 3. With this format followed correctly, the `questions.txt` file is ready for upload. run the following command from the project directory:
 

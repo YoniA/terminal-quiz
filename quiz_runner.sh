@@ -1,4 +1,4 @@
-#!/bin/zsh
+#!/bin/bash
 
 
 readonly SEPARATOR="\n\n"
@@ -27,8 +27,8 @@ while getopts "d:t:h" opt
 					;;
 
 				h)
-					echo "USAGE:"
-					echo "./quiz_runner.sh [-d database] [-t topic]"
+					echo -e "USAGE:"
+					echo -e "./quiz_runner.sh [-d database] [-t topic]"
 					exit
 					;;
         esac
@@ -40,7 +40,7 @@ show_random_item() {
 	clear
 	size=$(sqlite3 $db "select count(*) from stats natural join items_domains natural join domains where title=\"${title}\" and mastered=0")
 	if [[ "$size" == "0" ]]; then
-		echo "no items to show. exiting."
+		echo -e "no items to show. exiting."
 		exit
 	fi
 	
@@ -53,16 +53,16 @@ show_random_item() {
 	ans3=$(sqlite3 $db "select ans3 from items where iid=${iid}")
 	ans4=$(sqlite3 $db "select ans4 from items where iid=${iid}")
 
-	echo "\n"
+	echo -e "\n"
 	print_title $iid
 	
-	print_item $stem $ans1 $ans2 $ans3 $ans4
-	echo $SEPARATOR
+	print_item "$stem" "$ans1" "$ans2" "$ans3" "$ans4"
+	echo -e $SEPARATOR
 	
 	check_response
 
-	echo
-	vared -p "Show another question? Enter y to continue; any other key to exit: " -c choice
+	echo -e
+	read -p "Show another question? Enter y to continue; any other key to exit: " choice
 	case $choice in
 		y) 
 			show_random_item
@@ -78,27 +78,27 @@ show_random_item() {
 print_title() {
 	topic=$(sqlite3 $db "select title from domains natural join items_domains where iid=$1")
 	title_line="Topic: $topic"
-	echo $title_line
-	printf "%0.s-" {1..${#title_line}} 	
-	echo "\n"
+	echo -e $title_line
+	printf "%0.s-" $(seq ${#title_line}) 
+	echo -e "\n"
 }
 
 print_item() {
-	echo "$1"
-	echo $SEPARATOR
-	echo "a.\t$2"
-	echo "b.\t$3"
-	echo "c.\t$4"
-	echo "d.\t$5"
+	echo -e "$1"
+	echo -e $SEPARATOR
+	echo -e "a.\t$2"
+	echo -e "b.\t$3"
+	echo -e "c.\t$4"
+	echo -e "d.\t$5"
 }
 
-print_fee$dback() {
+print_feedback() {
 	key=$(sqlite3 $db "select key from keys where iid=$1")
 
 	if [[ "$key" == "$2" ]]; then
-		echo -e "Your response $2 is ${GREEN}correct!${RESET}"
+		echo -e -e "Your response $2 is ${GREEN}correct!${RESET}"
 	else
-		echo -e "Your response $2 is ${RED}wrong.${RESET}"
+		echo -e -e "Your response $2 is ${RED}wrong.${RESET}"
 	fi
 }
 
@@ -117,7 +117,7 @@ update_stats() {
 		
 		if [[ "$streak" == "$MASTERED_THRESHOLD" ]]; then
 			((mastered++))
-			echo "${BLINK}${GREEN}CONGRATULATIONS!${RESET} You have mastered this question! it will not show again."
+			echo -e "${BLINK}${GREEN}CONGRATULATIONS!${RESET} You have mastered this question! it will not show again."
 
 		fi
 	else
@@ -127,16 +127,16 @@ update_stats() {
 	fi
 	
 	sqlite3 $db "update stats set attempts=${attempts}, rights=${rights}, streak=${streak}, mastered=$mastered where iid=$1"
-	echo
-	echo "${BOLD}STATS:${RESET} Attempts: ${attempts}, Rights: ${rights}, Streak: ${streak}, Mastered: ${mastered}"
+	echo -e
+	echo -e "${BOLD}STATS:${RESET} Attempts: ${attempts}, Rights: ${rights}, Streak: ${streak}, Mastered: ${mastered}"
 }
 
 
-check_response() { # zsh equivalent to 'read -p' in bash
-	vared -p "Answer (a/b/c/d or s to skip): " -c response
+check_response() { 
+	read -p "Answer (a/b/c/d or s to skip): " response
 	case $response in
 		a|b|c|d) 
-			print_fee$dback $iid $response
+			print_feedback $iid $response
 			update_stats $iid $response 
 			;;
 			
@@ -144,7 +144,7 @@ check_response() { # zsh equivalent to 'read -p' in bash
 			show_random_item
 			;;
 		*) 
-			echo "Invalid response. Try again."
+			echo -e "Invalid response. Try again."
 			check_response;
 			;;
 	esac

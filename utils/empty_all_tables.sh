@@ -1,9 +1,9 @@
-#!/bin/zsh 
+#!/bin/bash 
 
 db=${1:-quiz.db}
 
 echo "CAUTION: This will WIPE OFF ALL CONTENT in the database, and CANNOT BE UNDONE. Do you wish to continue?"
-vared -p "Type 'confirm' to continue; any other key to abort: " -c response
+read -p "Type 'confirm' to continue; any other key to abort: " response
 
 case $response in
 	confirm)
@@ -13,7 +13,7 @@ case $response in
 		sqlite3 $db "delete from keys"
 		sqlite3 $db "delete from items"
 
-                echo "All tables are empty now."
+                echo -e "All tables are empty now."
 		;;
 	*)
 		exit

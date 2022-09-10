@@ -1,4 +1,4 @@
-#!/bin/zsh
+#!/bin/bash
 
 db=${1:-quiz.db}
 
