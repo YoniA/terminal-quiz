@@ -1,17 +1,18 @@
 #!/bin/bash
 
-
+# constants
 readonly SEPARATOR="\n\n"
-readonly BOLD='\e[1m'
-readonly RED='\e[31m'
-readonly GREEN='\e[32m'
-readonly YELLOW='\e[93m'
-readonly BLUE_BG='\e[44m'
-readonly YELLOW_BG='\e[103m'
-readonly MAGENTA_BG='\e[45m'
-readonly BLINK='\e[5m'
-readonly RESET='\e[0m'
 readonly MASTERED_THRESHOLD=5
+
+# terminal ANSI colors
+readonly RED="$(tput setaf 1)" 
+readonly GREEN="$(tput setaf 2)" 
+readonly BLUE="$(tput setaf 4)" 
+readonly BOLD="$(tput bold)" 
+readonly BLINK="$(tput bold)" 
+readonly RESET="$(tput sgr0)" 
+
+# default values
 db="quiz.db"
 title="title"
 
@@ -23,8 +24,7 @@ while getopts "d:t:h" opt
 					;;
 
         t)
-					title=$OPTARG
-					;;
+					title=$OPTARG ;;
 
 				h)
 					echo -e "USAGE:"
@@ -91,14 +91,11 @@ print_item() {
 	echo -e "c.\t$4"
 	echo -e "d.\t$5"
 }
-
-print_feedback() {
-	key=$(sqlite3 $db "select key from keys where iid=$1")
-
+print_feedback() { key=$(sqlite3 $db "select key from keys where iid=$1")
 	if [[ "$key" == "$2" ]]; then
-		echo -e -e "Your response $2 is ${GREEN}correct!${RESET}"
+		echo -e "Your response $2 is ${GREEN}correct!${RESET}"
 	else
-		echo -e -e "Your response $2 is ${RED}wrong.${RESET}"
+		echo -e "Your response $2 is ${RED}wrong.${RESET}"
 	fi
 }
 
@@ -128,7 +125,7 @@ update_stats() {
 	
 	sqlite3 $db "update stats set attempts=${attempts}, rights=${rights}, streak=${streak}, mastered=$mastered where iid=$1"
 	echo -e
-	echo -e "${BOLD}STATS:${RESET} Attempts: ${attempts}, Rights: ${rights}, Streak: ${streak}, Mastered: ${mastered}"
+	echo -e "${BOLD}STATS:${RESET} ${BLUE}Attempts:${RESET} ${attempts}, ${BLUE}Rights:${RESET} ${rights}, ${BLUE}Streak:${RESET} ${streak}, ${BLUE}Mastered:${RESET} ${mastered}${RESET}"
 }
 
 
@@ -153,4 +150,6 @@ check_response() {
 show_random_item
 
 
-# colors: https://misc.flogisoft.com/bash/tip_colors_and_formatting
+# colors: 
+# https://misc.flogisoft.com/bash/tip_colors_and_formatting
+# https://wiki.bash-hackers.org/scripting/terminalcodes
