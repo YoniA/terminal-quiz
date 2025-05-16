@@ -62,9 +62,9 @@ show_random_item() {
 	check_response
 
 	echo -e
-	read -p "Show another question? Enter y to continue; any other key to exit: " choice
+	read -p "Show another question? Press Enter or y to continue; any other key to exit: " choice
 	case $choice in
-		y) 
+		"" | y) 
 			show_random_item
 			;;
 		*) 
