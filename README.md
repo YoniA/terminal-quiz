@@ -1,8 +1,6 @@
 # About
 
 A collection of shell scripts that display random questions in terminal.
-The default database contains questions about software development topics - Linux, Command line tools, bash, JavaScript, HTML, CSS, Rails, Angular etc.
-But it can also be used for foreign language learning, or anything you want to memorize.
 
 Upon invocation, the runner script queries a custom `sqlite` database for a random question, displays it and gives the user feedback.
 The user can choose to continue, and get another question, or to exit the program.
@@ -24,7 +22,8 @@ When a certain question is answered correctly a consecutive number of times, it 
 1. clone this repo to your machine
 2. `cd` into the cloned directory
 3. add execute permissions: `sudo chmod +x quiz_runner.sh` 
-4. run `./quiz_runner.sh`
+4. add some questions to the database (see how below)
+5. run `./quiz_runner.sh`
 
 This should display a random question in the terminal.
 
