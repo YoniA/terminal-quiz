@@ -5,12 +5,14 @@ readonly SEPARATOR="\n\n"
 readonly MASTERED_THRESHOLD=5
 
 # terminal ANSI colors
-readonly RED="$(tput setaf 1)" 
-readonly GREEN="$(tput setaf 2)" 
-readonly BLUE="$(tput setaf 4)" 
-readonly BOLD="$(tput bold)" 
-readonly BLINK="$(tput bold)" 
-readonly RESET="$(tput sgr0)" 
+readonly RED="$(tput setaf 1)"
+readonly GREEN="$(tput setaf 2)"
+readonly YELLOW="$(tput setaf 3)"
+readonly BLUE="$(tput setaf 4)"
+readonly CYAN="$(tput setaf 6)"
+readonly BOLD="$(tput bold)"
+readonly BLINK="$(tput blink)"
+readonly RESET="$(tput sgr0)"
 
 # default values
 db="quiz.db"
@@ -56,16 +58,13 @@ show_random_item() {
 
 		shuffle_answers
 
-		echo -e "\n"
 		print_title $iid
-
 		print_item "$stem" "$ans1" "$ans2" "$ans3" "$ans4"
-		echo -e $SEPARATOR
 
 		check_response
 
-		echo -e
-		read -p "Show another question? Press Enter or y to continue; any other key to exit: " choice
+		print_divider
+		read -p "  Press Enter for next question, or any other key to exit: " choice
 		case $choice in
 			"" | y)
 				;;
@@ -114,27 +113,43 @@ shuffle_answers() {
 	esac
 }
 
+print_divider() {
+	printf "${BLUE}"
+	printf '─%.0s' $(seq 1 $(tput cols))
+	printf "${RESET}\n"
+}
+
 print_title() {
-	topic=$(sqlite3 $db "select title from domains natural join items_domains where iid=$1")
-	title_line="Topic: $topic"
-	echo -e $title_line
-	printf "%0.s-" $(seq ${#title_line}) 
-	echo -e "\n"
+	local topic=$(sqlite3 $db "select title from domains natural join items_domains where iid=$1")
+	local remaining=$(sqlite3 $db "select count(*) from stats natural join items_domains natural join domains where title=\"${title}\" and mastered=0")
+	print_divider
+	echo -e "  ${BOLD}${BLUE}Topic:${RESET} ${topic}   ${BLUE}Remaining:${RESET} ${remaining}"
+	print_divider
+	echo
 }
 
 print_item() {
-	echo -e "$1"
-	echo -e $SEPARATOR
-	echo -e "a.\t$2"
-	echo -e "b.\t$3"
-	echo -e "c.\t$4"
-	echo -e "d.\t$5"
+	echo -e "${BOLD}$1${RESET}\n"
+	echo -e "  ${CYAN}a)${RESET}  $2"
+	echo -e "  ${CYAN}b)${RESET}  $3"
+	echo -e "  ${CYAN}c)${RESET}  $4"
+	echo -e "  ${CYAN}d)${RESET}  $5"
+	echo
+}
+
+get_answer() {
+	case $1 in
+		a) echo "$ans1" ;;
+		b) echo "$ans2" ;;
+		c) echo "$ans3" ;;
+		d) echo "$ans4" ;;
+	esac
 }
 print_feedback() {
 	if [[ "$shuffled_key" == "$2" ]]; then
-		echo -e "Your response $2 is ${GREEN}correct!${RESET}"
+		echo -e "\n  ${GREEN}${BOLD}✓  Correct!${RESET}"
 	else
-		echo -e "Your response $2 is ${RED}wrong.${RESET}"
+		echo -e "\n  ${RED}${BOLD}✗  Wrong.${RESET}  The correct answer was ${BOLD}${shuffled_key}) $(get_answer $shuffled_key)${RESET}"
 	fi
 }
 
@@ -152,7 +167,7 @@ update_stats() {
 		
 		if [[ "$streak" == "$MASTERED_THRESHOLD" ]]; then
 			((mastered++))
-			echo -e "${BLINK}${GREEN}CONGRATULATIONS!${RESET} You have mastered this question! it will not show again."
+			echo -e "\n  ${BLINK}${BOLD}${YELLOW}★  Mastered!${RESET} This question won't appear again."
 
 		fi
 	else
@@ -162,8 +177,12 @@ update_stats() {
 	fi
 	
 	sqlite3 $db "update stats set attempts=${attempts}, rights=${rights}, streak=${streak}, mastered=$mastered where iid=$1"
-	echo -e
-	echo -e "${BOLD}STATS:${RESET} ${BLUE}Attempts:${RESET} ${attempts}, ${BLUE}Rights:${RESET} ${rights}, ${BLUE}Streak:${RESET} ${streak}, ${BLUE}Mastered:${RESET} ${mastered}${RESET}"
+
+	local bar=""
+	for ((i=0; i<streak; i++)); do bar+="█"; done
+	for ((i=streak; i<MASTERED_THRESHOLD; i++)); do bar+="░"; done
+
+	echo -e "\n  ${BOLD}Attempts:${RESET} ${attempts}   ${BOLD}Correct:${RESET} ${rights}   ${BOLD}Streak:${RESET} ${GREEN}${bar}${RESET} ${streak}/${MASTERED_THRESHOLD}\n"
 }
 
 
