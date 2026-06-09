@@ -37,40 +37,41 @@ done
 
 
 show_random_item() {
-	clear
-	size=$(sqlite3 $db "select count(*) from stats natural join items_domains natural join domains where title=\"${title}\" and mastered=0")
-	if [[ "$size" == "0" ]]; then
-		echo -e "no items to show. exiting."
-		exit
-	fi
-	
-	# show only items that are not mastered yet
-	iid=$(sqlite3 $db "select iid from stats natural join items_domains natural join domains where title=\"${title}\" and mastered=0 order by streak, random() limit 1")
-
- 	stem=$(sqlite3 $db "select stem from items where iid=${iid}")
-	ans1=$(sqlite3 $db "select ans1 from items where iid=${iid}")
-	ans2=$(sqlite3 $db "select ans2 from items where iid=${iid}")
-	ans3=$(sqlite3 $db "select ans3 from items where iid=${iid}")
-	ans4=$(sqlite3 $db "select ans4 from items where iid=${iid}")
-
-	echo -e "\n"
-	print_title $iid
-	
-	print_item "$stem" "$ans1" "$ans2" "$ans3" "$ans4"
-	echo -e $SEPARATOR
-	
-	check_response
-
-	echo -e
-	read -p "Show another question? Press Enter or y to continue; any other key to exit: " choice
-	case $choice in
-		"" | y) 
-			show_random_item
-			;;
-		*) 
+	while true; do
+		clear
+		size=$(sqlite3 $db "select count(*) from stats natural join items_domains natural join domains where title=\"${title}\" and mastered=0")
+		if [[ "$size" == "0" ]]; then
+			echo -e "no items to show. exiting."
 			exit
-			;;
-	esac
+		fi
+
+		# show only items that are not mastered yet
+		iid=$(sqlite3 $db "select iid from stats natural join items_domains natural join domains where title=\"${title}\" and mastered=0 order by streak, random() limit 1")
+
+		stem=$(sqlite3 $db "select stem from items where iid=${iid}")
+		ans1=$(sqlite3 $db "select ans1 from items where iid=${iid}")
+		ans2=$(sqlite3 $db "select ans2 from items where iid=${iid}")
+		ans3=$(sqlite3 $db "select ans3 from items where iid=${iid}")
+		ans4=$(sqlite3 $db "select ans4 from items where iid=${iid}")
+
+		echo -e "\n"
+		print_title $iid
+
+		print_item "$stem" "$ans1" "$ans2" "$ans3" "$ans4"
+		echo -e $SEPARATOR
+
+		check_response
+
+		echo -e
+		read -p "Show another question? Press Enter or y to continue; any other key to exit: " choice
+		case $choice in
+			"" | y)
+				;;
+			*)
+				exit
+				;;
+		esac
+	done
 }
 
 
@@ -129,22 +130,25 @@ update_stats() {
 }
 
 
-check_response() { 
-	read -p "Answer (a/b/c/d or s to skip): " response
-	case $response in
-		a|b|c|d) 
-			print_feedback $iid $response
-			update_stats $iid $response 
-			;;
-			
-		s) 
-			show_random_item
-			;;
-		*) 
-			echo -e "Invalid response. Try again."
-			check_response;
-			;;
-	esac
+check_response() {
+	while true; do
+		read -p "Answer (a/b/c/d or s to skip): " response
+		case $response in
+			a|b|c|d)
+				print_feedback $iid $response
+				update_stats $iid $response
+				return
+				;;
+
+			s)
+				show_random_item
+				return
+				;;
+			*)
+				echo -e "Invalid response. Try again."
+				;;
+		esac
+	done
 }
 
 show_random_item
