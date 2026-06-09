@@ -54,6 +54,8 @@ show_random_item() {
 		ans3=$(sqlite3 $db "select ans3 from items where iid=${iid}")
 		ans4=$(sqlite3 $db "select ans4 from items where iid=${iid}")
 
+		shuffle_answers
+
 		echo -e "\n"
 		print_title $iid
 
@@ -76,6 +78,42 @@ show_random_item() {
 
 
 
+shuffle_answers() {
+	local db_key=$(sqlite3 $db "select key from keys where iid=$iid")
+	local correct_idx
+	case $db_key in
+		a) correct_idx=0 ;;
+		b) correct_idx=1 ;;
+		c) correct_idx=2 ;;
+		d) correct_idx=3 ;;
+	esac
+
+	local answers=("$ans1" "$ans2" "$ans3" "$ans4")
+	for ((i=3; i>0; i--)); do
+		local j=$((RANDOM % (i+1)))
+		local tmp="${answers[$i]}"
+		answers[$i]="${answers[$j]}"
+		answers[$j]="$tmp"
+		if [[ $correct_idx -eq $i ]]; then
+			correct_idx=$j
+		elif [[ $correct_idx -eq $j ]]; then
+			correct_idx=$i
+		fi
+	done
+
+	ans1="${answers[0]}"
+	ans2="${answers[1]}"
+	ans3="${answers[2]}"
+	ans4="${answers[3]}"
+
+	case $correct_idx in
+		0) shuffled_key=a ;;
+		1) shuffled_key=b ;;
+		2) shuffled_key=c ;;
+		3) shuffled_key=d ;;
+	esac
+}
+
 print_title() {
 	topic=$(sqlite3 $db "select title from domains natural join items_domains where iid=$1")
 	title_line="Topic: $topic"
@@ -92,8 +130,8 @@ print_item() {
 	echo -e "c.\t$4"
 	echo -e "d.\t$5"
 }
-print_feedback() { key=$(sqlite3 $db "select key from keys where iid=$1")
-	if [[ "$key" == "$2" ]]; then
+print_feedback() {
+	if [[ "$shuffled_key" == "$2" ]]; then
 		echo -e "Your response $2 is ${GREEN}correct!${RESET}"
 	else
 		echo -e "Your response $2 is ${RED}wrong.${RESET}"
@@ -108,8 +146,7 @@ update_stats() {
 	streak=$(sqlite3 $db "select streak from stats where iid=$1")
 	mastered=0;
 
-	key=$(sqlite3 $db "select key from keys where iid=$1")
-	if [[ "$key" == "$2" ]]; then
+	if [[ "$shuffled_key" == "$2" ]]; then
 		((rights++))
 		((streak++))
 		
