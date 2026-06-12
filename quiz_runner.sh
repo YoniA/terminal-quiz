@@ -186,9 +186,24 @@ update_stats() {
 }
 
 
+delete_question() {
+	read -p "Delete this question permanently? Type 'confirm' to delete, anything else to cancel: " confirmation
+	if [[ "$confirmation" == "confirm" ]]; then
+		sqlite3 $db "delete from keys where iid=$iid"
+		sqlite3 $db "delete from items_domains where iid=$iid"
+		sqlite3 $db "delete from stats where iid=$iid"
+		sqlite3 $db "delete from items where iid=$iid"
+		echo -e "\n  ${RED}Question deleted.${RESET}"
+		return 0
+	else
+		echo -e "\n  Deletion cancelled."
+		return 1
+	fi
+}
+
 check_response() {
 	while true; do
-		read -p "Answer (a/b/c/d or s to skip): " response
+		read -p "Answer (a/b/c/d, s to skip, x to delete): " response
 		case $response in
 			a|b|c|d)
 				print_feedback $iid $response
@@ -199,6 +214,13 @@ check_response() {
 			s)
 				show_random_item
 				return
+				;;
+
+			x)
+				if delete_question; then
+					show_random_item
+					return
+				fi
 				;;
 			*)
 				echo -e "Invalid response. Try again."
