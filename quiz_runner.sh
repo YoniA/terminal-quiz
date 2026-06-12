@@ -3,6 +3,7 @@
 # constants
 readonly SEPARATOR="\n\n"
 readonly MASTERED_THRESHOLD=5
+readonly MAX_CONTENT_WIDTH=78
 
 # terminal ANSI colors
 readonly RED="$(tput setaf 1)"
@@ -41,9 +42,10 @@ done
 show_random_item() {
 	while true; do
 		clear
+		compute_layout
 		size=$(sqlite3 $db "select count(*) from stats natural join items_domains natural join domains where title=\"${title}\" and mastered=0")
 		if [[ "$size" == "0" ]]; then
-			echo -e "no items to show. exiting."
+			echo -e "${PAD}no items to show. exiting."
 			exit
 		fi
 
@@ -64,7 +66,7 @@ show_random_item() {
 		check_response
 
 		print_divider
-		read -p "  Press Enter for next question, or any other key to exit: " choice
+		read -p "${PAD}Press Enter for next question, or any other key to exit: " choice
 		case $choice in
 			"" | y)
 				;;
@@ -113,9 +115,40 @@ shuffle_answers() {
 	esac
 }
 
+# compute a centered content area: CONTENT_WIDTH columns wide, capped at
+# MAX_CONTENT_WIDTH, with PAD spaces of margin on each side
+compute_layout() {
+	local term_width=$(tput cols)
+	CONTENT_WIDTH=$term_width
+	if (( CONTENT_WIDTH > MAX_CONTENT_WIDTH )); then
+		CONTENT_WIDTH=$MAX_CONTENT_WIDTH
+	fi
+	PAD=$(printf '%*s' $(( (term_width - CONTENT_WIDTH) / 2 )) '')
+}
+
+# print $3, word-wrapped to CONTENT_WIDTH, indented by PAD.
+# $1 is printed before the first line, $2 is its visible width (used to
+# align continuation lines under it; may contain color codes)
+print_wrapped() {
+	local prefix="$1" prefix_width="$2" text="$3"
+	local indent=$(printf '%*s' "$prefix_width" '')
+	local wrap_width=$((CONTENT_WIDTH - prefix_width))
+	(( wrap_width < 10 )) && wrap_width=10
+
+	local first=true
+	while IFS= read -r line; do
+		if $first; then
+			echo -e "${PAD}${prefix}${line}"
+			first=false
+		else
+			echo -e "${PAD}${indent}${line}"
+		fi
+	done < <(echo -e "$text" | fold -s -w "$wrap_width")
+}
+
 print_divider() {
-	printf "${BLUE}"
-	printf '─%.0s' $(seq 1 $(tput cols))
+	printf "%s${BLUE}" "$PAD"
+	printf '─%.0s' $(seq 1 "$CONTENT_WIDTH")
 	printf "${RESET}\n"
 }
 
@@ -123,17 +156,20 @@ print_title() {
 	local topic=$(sqlite3 $db "select title from domains natural join items_domains where iid=$1")
 	local remaining=$(sqlite3 $db "select count(*) from stats natural join items_domains natural join domains where title=\"${title}\" and mastered=0")
 	print_divider
-	echo -e "  ${BOLD}${BLUE}Topic:${RESET} ${topic}   ${BLUE}Remaining:${RESET} ${remaining}"
+	echo -e "${PAD}  ${BOLD}${BLUE}Topic:${RESET} ${topic}   ${BLUE}Remaining:${RESET} ${remaining}"
 	print_divider
 	echo
 }
 
 print_item() {
-	echo -e "${BOLD}$1${RESET}\n"
-	echo -e "  ${CYAN}a)${RESET}  $2"
-	echo -e "  ${CYAN}b)${RESET}  $3"
-	echo -e "  ${CYAN}c)${RESET}  $4"
-	echo -e "  ${CYAN}d)${RESET}  $5"
+	printf "${BOLD}"
+	print_wrapped "" 0 "$1"
+	printf "${RESET}\n"
+
+	print_wrapped "  ${CYAN}a)${RESET}  " 6 "$2"
+	print_wrapped "  ${CYAN}b)${RESET}  " 6 "$3"
+	print_wrapped "  ${CYAN}c)${RESET}  " 6 "$4"
+	print_wrapped "  ${CYAN}d)${RESET}  " 6 "$5"
 	echo
 }
 
@@ -146,10 +182,12 @@ get_answer() {
 	esac
 }
 print_feedback() {
+	echo
 	if [[ "$shuffled_key" == "$2" ]]; then
-		echo -e "\n  ${GREEN}${BOLD}✓  Correct!${RESET}"
+		echo -e "${PAD}  ${GREEN}${BOLD}✓  Correct!${RESET}"
 	else
-		echo -e "\n  ${RED}${BOLD}✗  Wrong.${RESET}  The correct answer was ${BOLD}${shuffled_key}) $(get_answer $shuffled_key)${RESET}"
+		echo -e "${PAD}  ${RED}${BOLD}✗  Wrong.${RESET}"
+		print_wrapped "  Correct answer: ${BOLD}${shuffled_key})${RESET}  " 22 "$(get_answer $shuffled_key)"
 	fi
 }
 
@@ -167,8 +205,8 @@ update_stats() {
 		
 		if [[ "$streak" == "$MASTERED_THRESHOLD" ]]; then
 			((mastered++))
-			echo -e "\n  ${BLINK}${BOLD}${YELLOW}★  Mastered!${RESET} This question won't appear again."
-
+			echo
+			echo -e "${PAD}  ${BLINK}${BOLD}${YELLOW}★  Mastered!${RESET} This question won't appear again."
 		fi
 	else
 		zero=0
@@ -182,28 +220,32 @@ update_stats() {
 	for ((i=0; i<streak; i++)); do bar+="█"; done
 	for ((i=streak; i<MASTERED_THRESHOLD; i++)); do bar+="░"; done
 
-	echo -e "\n  ${BOLD}Attempts:${RESET} ${attempts}   ${BOLD}Correct:${RESET} ${rights}   ${BOLD}Streak:${RESET} ${GREEN}${bar}${RESET} ${streak}/${MASTERED_THRESHOLD}\n"
+	echo
+	echo -e "${PAD}  ${BOLD}Attempts:${RESET} ${attempts}   ${BOLD}Correct:${RESET} ${rights}   ${BOLD}Streak:${RESET} ${GREEN}${bar}${RESET} ${streak}/${MASTERED_THRESHOLD}"
+	echo
 }
 
 
 delete_question() {
-	read -p "Delete this question permanently? Type 'confirm' to delete, anything else to cancel: " confirmation
+	read -p "${PAD}Delete this question permanently? Type 'confirm' to delete, anything else to cancel: " confirmation
 	if [[ "$confirmation" == "confirm" ]]; then
 		sqlite3 $db "delete from keys where iid=$iid"
 		sqlite3 $db "delete from items_domains where iid=$iid"
 		sqlite3 $db "delete from stats where iid=$iid"
 		sqlite3 $db "delete from items where iid=$iid"
-		echo -e "\n  ${RED}Question deleted.${RESET}"
+		echo
+		echo -e "${PAD}  ${RED}Question deleted.${RESET}"
 		return 0
 	else
-		echo -e "\n  Deletion cancelled."
+		echo
+		echo -e "${PAD}  Deletion cancelled."
 		return 1
 	fi
 }
 
 check_response() {
 	while true; do
-		read -p "Answer (a/b/c/d, s to skip, x to delete): " response
+		read -p "${PAD}Answer (a/b/c/d, s to skip, x to delete): " response
 		case $response in
 			a|b|c|d)
 				print_feedback $iid $response
@@ -223,7 +265,7 @@ check_response() {
 				fi
 				;;
 			*)
-				echo -e "Invalid response. Try again."
+				echo -e "${PAD}Invalid response. Try again."
 				;;
 		esac
 	done
