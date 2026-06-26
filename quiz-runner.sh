@@ -17,21 +17,28 @@ readonly RESET="$(tput sgr0)"
 
 # default values
 db="quiz.db"
-title="title"
+did=0
+tiebreak="random()"   # tie-breaker among questions sharing the lowest streak
 
-while getopts "d:t:h" opt
+while getopts "d:t:oh" opt
 	do
         case $opt in
         d)
-					db=$OPTARG 
+					db=$OPTARG
 					;;
 
         t)
-					title=$OPTARG ;;
+					did=$OPTARG ;;
+
+        o)
+					tiebreak="iid" ;;
 
 				h)
 					echo -e "USAGE:"
-					echo -e "./quiz_runner.sh [-d database] [-t topic]"
+					echo -e "./quiz-runner.sh [-d database] [-t topic_id] [-o]"
+					echo -e "  -o  fetch questions in order (by id) instead of randomly,"
+					echo -e "      among questions with the same streak"
+					echo -e "List topic ids with: utils/db-overview.sh"
 					exit
 					;;
         esac
@@ -43,14 +50,14 @@ show_random_item() {
 	while true; do
 		clear
 		compute_layout
-		size=$(sqlite3 $db "select count(*) from stats natural join items_domains natural join domains where title=\"${title}\" and mastered=0")
+		size=$(sqlite3 $db "select count(*) from stats natural join items_domains where did=${did} and mastered=0")
 		if [[ "$size" == "0" ]]; then
 			echo -e "${PAD}no items to show. exiting."
 			exit
 		fi
 
 		# show only items that are not mastered yet
-		iid=$(sqlite3 $db "select iid from stats natural join items_domains natural join domains where title=\"${title}\" and mastered=0 order by streak, random() limit 1")
+		iid=$(sqlite3 $db "select iid from stats natural join items_domains where did=${did} and mastered=0 order by streak, ${tiebreak} limit 1")
 
 		stem=$(sqlite3 $db "select stem from items where iid=${iid}")
 		ans1=$(sqlite3 $db "select ans1 from items where iid=${iid}")
@@ -154,7 +161,7 @@ print_divider() {
 
 print_title() {
 	local topic=$(sqlite3 $db "select title from domains natural join items_domains where iid=$1")
-	local remaining=$(sqlite3 $db "select count(*) from stats natural join items_domains natural join domains where title=\"${title}\" and mastered=0")
+	local remaining=$(sqlite3 $db "select count(*) from stats natural join items_domains where did=${did} and mastered=0")
 	print_divider
 	echo -e "${PAD}  ${BOLD}${BLUE}Topic:${RESET} ${topic}   ${BLUE}Remaining:${RESET} ${remaining}"
 	print_divider
